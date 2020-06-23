@@ -1,0 +1,33 @@
+
+
+<h1>Page Analyzer</h1>
+<div>
+	<p>Upload your HAR file and it will do the analysis for you. :)</p>
+	<p>For more details on how you can improve your page please refer to the following documentations:</p>
+	<ul>
+		<li><a target="_blank" href="https://developers.google.com/speed/docs/insights/rules">Google(PageSpeed): https://developers.google.com/speed/docs/insights/rules</a></li>
+		<li><a target="_blank" href="https://developer.yahoo.com/performance/rules.html">Yahoo(YSlow): https://developer.yahoo.com/performance/rules.html</a></li>
+		<li><a target="_blank" href="https://gtmetrix.com/avoid-bad-requests.html">GTMetrix: https://gtmetrix.com/avoid-bad-requests.html</a></li>
+		
+	</ul>
+	</div>
+
+<form class="form" enctype="multipart/form-data" method="post">
+	
+	<div class="form-group">
+		<label for="harFile">Select HAR File:</label> 
+		<input type="file" class="form-control" name="harFile" id="harFile" />
+	</div>
+	
+	<div class="form-group">
+		<label for="harFile">Name(Optional):</label> 
+		<input type="text" class="form-control" name="resultName" id="resultName" />
+	</div>
+	
+	<div class="form-group">
+		<label for="saveResults">Save Results</label> 
+		<input type="checkbox" name="saveResults" id="saveResults" checked="checked" />
+	</div>	
+	
+	<input type="submit" class="form-control btn btn-primary" value="Submit">
+</form>

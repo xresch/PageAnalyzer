@@ -1,0 +1,85 @@
+/*************************************************************************
+ * 
+ * @author Reto Scheiwiller, 2018
+ * 
+ * Distributed under the MIT license
+ *************************************************************************/
+
+.result-view-tabs{
+	display: none;
+}
+
+code {
+	color: black;
+}
+
+#docu h1, #docu h2 {
+	margin-top: 40px;
+
+}
+
+/*************************************************************************
+ * Bootstrap override
+ *************************************************************************/
+
+@media (min-width: 1200px) {
+	.container {
+	    max-width: 90%;
+	}
+}
+
+/*************************************************************************
+ * Gantt Chart
+ *************************************************************************/
+.ganttBlock{
+	float: left;
+	padding: 0px;
+	margin: 0px;
+}
+
+.gantt-legend{
+	padding: 10px;
+	margin: 10px;
+	border: 1px solid lightgray;
+	display: flex;
+}
+
+.gantt-legend-group{
+	margin-right: 20px;
+}
+.gantt-legend-square{
+	width: 15px;
+	height: 15px;
+	float: left;
+	margin-right: 5px;
+}
+
+.percentdelta{ background-color: #6277ce; }
+.percentblocked{ background-color: #A60C00; }
+.percentdns{ background-color: #FF8B00; }
+.percentconnect{ background-color: #7F0056; }
+.percentssl{ background-color: #ff6457; }
+.percentsend{ background-color: #A65A00; }
+.percentwait{ background-color: #CE008B; }
+.percentreceive{ background-color: #FF1300; }
+
+/* As hex codes */
+
+.color-primary-0 { color: #FF1300 }	/* Main Primary color */
+.color-primary-1 { color: #FF695E }
+.color-primary-2 { color: #FF4031 }
+.color-primary-3 { color: #D40F00 }
+.color-primary-4 { color: #A60C00 }
+
+.color-secondary-1-0 { color: #FF8B00 }	/* Main Secondary color (1) */
+.color-secondary-1-1 { color: #FFB55E }
+.color-secondary-1-2 { color: #FFA131 }
+.color-secondary-1-3 { color: #D47300 }
+.color-secondary-1-4 { color: #A65A00 }
+
+.color-secondary-2-0 { color: #CE008B }	/* Main Secondary color (2) */
+.color-secondary-2-1 { color: #D950AC }
+.color-secondary-2-2 { color: #D1289A }
+.color-secondary-2-3 { color: #A2006D }
+.color-secondary-2-4 { color: #7F0056 }
+

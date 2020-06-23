@@ -1,0 +1,305 @@
+################################################################################
+# Page Analyzer v 2.3
+################################################################################
+- Fixed table layout when displaying long URLs
+- Result View: Added Gantt Chart Entry to Statistics Menu
+- Comparison View: Added buttons to open results
+- Gantt Chart: Details Popover
+- Check are requests cached (for Chromium based HAR files, Edge/Chrome)
+- Various smaller improvements
+
+################################################################################
+# Page Analyzer v 2.2
+################################################################################
+- Fixed HAR Download file format
+- Improved LDAP connection with SSL option
+- Added property for configure http connector IP
+- Added general manual pages
+- Fixed random Database force close issue
+- Improved Security
+- Improved CPU Sampling
+- Modals are Draggable
+- Loading Sign for CFWForm Submit Buttons
+
+################################################################################
+# Page Analyzer v 2.1
+################################################################################
+=== MIGRATION INFORMATION ===
+Problem: 
+  DB Upgrade from H2 v1.4.197 to v1.4.200 causes old database file to be incompatible.
+  
+Solution:
+  If you want to keep your previous data, export it from the older Page Analyzer 
+  version and insert it into the new database manually.
+
+=== CHANGES ===
+- Fixes and Improvements:
+  - Navbar flexible height handled properly
+  - Menu has Icons
+
+- New Features:
+  - Integrated CPU Sampling
+  
+- CFW Framework Improvements: 
+  - Renamed "Group" to "Role"
+  - Started to implement Spaces Feature
+  - Synchonized session propagation
+  - Removed theme "sketchy" as it was to sketchy
+  - Added Themes: slate-edged, warm-soft, warm-edged
+  - Fetch user firstname from LDAP
+  - Fetch user lastname from LDAP
+  - Fetch user mail from LDAP
+  - Added basic mail functionality
+  - Added basic scheduling functionality
+  - Added FormField.TAGS
+  - Added Autocomplete functionality for CFWField
+  - Added Pipeline for parallel processing
+  - Added GSON Serializer for CFWObject and ResultSet
+  - Added CFWDBDefaultOperations
+  - Changed Menu creation to registry style
+  - Added permission check to menu items
+  - Added Features Capability to implement functionality as features
+  - Upgraded h3 to v.1.4.2
+  - CFWSQL: 
+    - added methods for DB migration
+    - added whereArrayContains()
+    - added deleteTop()
+    - added offset()
+    - changed limit() to preparedStatement style
+  - cfw.js: 
+    - Added cfw_filterItems()
+
+  
+  
+  
+################################################################################
+# Page Analyzer v 2.0
+################################################################################
+=== MIGRATION INFORMATION ===
+Problem: 
+  Due to changes of foreign key creation, the DB creates duplicated
+  foreign keys but doesn't apply the right ON DELETE policies, what causes 
+  inconsistencies and corrupts the assignment of users and permissions to groups.
+  Check if you can add and remove users/permission from groups without issues.
+  If you get an error apply the below solution.
+  
+Solution:
+  You might need to connect to the database and delete all the foreign keys for 
+  the following two tables for the usermanagement to work properly. After a restart
+  of the application the foreign key will be regenerated again.
+    - CFW_USER_GROUP_MAP
+    - CFW_GROUP_PERMISSION_MAP
+
+=== CHANGES ===
+- Fixes and Improvements:
+  - Removed HAR file loading from result page as it could cause OutOfMemory
+  - Added status field to user creation form
+  - Autofocus username field on login page
+  - fixed anonymous login when authentication is false
+  - Added renamable check to group
+  - Fixed Gantt Chart design
+  - UserMgmt: Toogle button for Group/Permissions in first cell of row, ordered by name
+  - Updated Documentation
+  - HTML 5 footer issue fixed
+  - Moved popup messages(toasts) to bottom of the page
+ 
+- New Features:
+  - Edit user details
+  - Edit group details
+  - Reset user password
+  - API with Overview page
+    - Create example requests
+  - Configuration Page with various settings
+    - Cache Files
+	- Application Themes (inculding custom theme)
+	- Code highlighting themes
+	- Logo Path
+	- Menu Title
+  - Set Permissions to Delete Results
+
+- CFW Framework Improvements: 
+  - Application:
+    - Changed startup procedure
+	- Created Registry for 
+	  - API
+	  - Objects
+	  - Components
+  - Database & Data Handling
+    - Migrated all database tables to CFWObjects style
+	- Added Array support to CFWField
+	- Added check for not closed DB connections and force close them
+	- Default column definition for CFWFields
+    - Added CFWStatement to create SQL statements for CFWObjects
+      - Method createTable() for initializing DB Tables for CFWObjects
+	  - Query Caching
+  - Forms:
+    - added FormFieldType.DATEPICKER
+	- added FormFieldType.DATETIMEPICKER
+	- added FormFieldType.SELECT
+	- added FormFieldType.EMAIL
+    - added FormFieldType.NUMBER
+	- added FormFieldType.WYSIWYG (Editor field)
+	- added Select to FormFieldType
+	- added Limit to form cache
+	- added info decorators on form fields
+  - Improved Validation
+    - Added test cases
+    - Added Password Validator
+	- Added Email Validator
+	- Added Epoch Or Time Validator
+  - Other:
+    - Propagate sessions to all servlet contexts
+	- Added custom fields to CFWLog
+	- Cleaned up compiler warnings
+    - Assembly files
+	  - ETag handling
+	  - improved hashing
+	  
+
+################################################################################
+# Page Analyzer v 1.9
+################################################################################
+version skipped because of big release.
+
+################################################################################
+# Page Analyzer v 1.8
+################################################################################
+- fixed first time login issue
+- fixed compare view
+- added sticky header support for tables
+- added toast messages
+- added create user feature
+- added create group feature
+- changed sort order for users/groups/permissions to alphabetically
+- created config item for max upload size
+
+################################################################################
+# Page Analyzer v 1.7
+################################################################################
+- GROUNDBREAKING: User Management Interface!
+- Themes: Added multiple themes and a setting in the properties file
+- fixed gantt chart breaking because of wrong percentage calculation
+- Footer is now created dynamically
+- alerts made unique by message
+- redirect to requested URL after login
+- added background image for login screen
+- fixed mobile diyplay size
+- username/email case insensitive handling
+- no menu items on login page
+- upgrade to Bootstrap 4 and JQuery 3.4.1
+
+- enhanced JSON Response
+- Changed result list to display buttons instead of links
+- cfw.js: Created class CFWTable and CTWToogleButton 
+- cfw.js: created showModal() and showSmallModal
+
+################################################################################
+# Page Analyzer v 1.6
+################################################################################
+- added user management to core framework
+- added default admin users
+- added change passwword functionality
+- added manage results feature for admin accounts
+
+################################################################################
+# Page Analyzer v 1.5
+################################################################################
+- added command line argument -config.file
+- fixed navbar
+- added name for results
+
+################################################################################
+# Page Analyzer v 1.4
+################################################################################
+- added shutdown handling for graceful server shutdown.
+- added license files
+- History View: Added download links for results and .har-Files
+- History View: Added select/deselect all buttons
+- fixed delete redirect
+- added confirmation popup to delete actions
+- improved session handling,
+- started test cases
+- made menu creation dynamic
+
+################################################################################
+# Page Analyzer v 1.3
+################################################################################
+- added support for HTTPS
+- added config for forwarding HTTPS to HTTP
+- made logging asynchronous
+- Updated Docu page and added table of contents
+- Gantt View: Added dropdowns for analyzing cookies and headers
+
+################################################################################
+# Page Analyzer v 1.2
+################################################################################
+- javadoc for custom.js
+- refactoring DB access, better logging
+- refactoring: moved general methods to cfw.js
+- updated to jetty 9.4
+- moved API to unsecured context, can be used without login 
+- fixed security isssue with jar resource
+
+################################################################################
+# Page Analyzer v 1.1
+################################################################################
+- added save results checkbox
+- added LDAP authentication
+- split core functionality into separate project
+- added gantt chart view
+- load data through request instead of writing it into html
+- added details modal to gantt chart
+- access validation on DB level
+- added userid to logfiles
+
+################################################################################
+# Page Analyzer v 1.0
+################################################################################
+- added Login / Logout functionality
+- added rule paetags
+- added H2 Database
+- added Result History
+- added Result View
+- added Comparison View
+- added H2 configuration to pageanalyzer.properties
+
+################################################################################
+# Page Analyzer v 0.9
+################################################################################
+- added rule paurllength
+- custom.js: fixed decodeURIComponent errors
+- code cleanups
+- fixed log format
+- Analyze URL: fixed return previous result
+- Analyze URL: Increased stability
+- fixed first analysis returns nothing.
+- support multi-threading 
+- Add thread count configuration
+- add redirect to base path
+- fixed handling quotes in javascript errors.
+
+################################################################################
+# Page Analyzer v 0.8
+################################################################################
+- Added exception propagation for to end user for exceptions thrown by custom_yslow.js
+- Rule paduplicatedrequests: Check for duplicated requests
+- Fixed YSlow "ignoring" duplicated requests
+
+################################################################################
+# Page Analyzer v 0.7
+################################################################################
+- Added custom content possibilities
+- YSlow: decode URLs reverted as causing issues
+
+################################################################################
+# Page Analyzer v 0.6
+################################################################################
+- Analyze URL, use PhantomJS to get HAR JSON string
+- YSlow: decode URLs and add page time to result
+
+################################################################################
+# Page Analyzer v 0.5
+################################################################################
+- Initial Version
+- HAR Upload 
+- REST API for HAR Upload

@@ -1,0 +1,29 @@
+
+<h2>Step 1: Create a HAR File</h2>
+<p>Create a .har-File(har=HTTP Archive) using Chrome, Firefox, or Fiddler.</p>
+<ul>
+	<li><strong>Page Analyzer: </strong>Go to the tab "Analyze URL" and enter the URL that should be analyzed. This works only when the application server has internet access, and the page is accessible without a login.</li>
+	<li><strong>Chrome: </strong>Open the developer tools, capture network traffic, right click and save as .har-File. </li>
+	<li><strong>Firefox: </strong>Open the developer tools, capture network traffic, right click and save as .har-File. </li>
+	<li><strong>Internet Explorer:</strong> Use Fiddler. <span style="color: red;">IMPORTANT:</span> The rule "Compress with GZIP" will show wrong results when using Internet Explorer, as it doesn't save in the .har-File if a response is gzipped.</strong> </li>
+	<li><strong>Fiddler: </strong>Capture network traffic and go to &quot;File &gt;&gt; Export Sessions &gt;&gt; All Sessions&quot; and choose &quot;HTTP Archive v1.2&quot; as export format. </li>
+</ul>
+
+
+<h2>Step 2: Upload HAR File</h2>
+<p> 
+	After creating a .har-File upload it on the page &quot;HAR Upload&quot;. 
+	The summary will be displayed, please be aware that in the menu bar additional items where added where you can get other views as well. 
+	When the checkbox "Save Results" is enabled, the result and the .har.File will be saved to the database and will be accessible through &quot;Menu &gt;&gt; History&quot;.
+</p>
+
+
+<h2>Step 3: Analysis</h2>
+<p> 
+	Please consider the following when analyzing your websites performance with the Page Analyzer:
+</p>
+<ul>
+	<li><strong>Arbitrary Weighting: </strong>The weights of the rules and their contribution to the overall score were in most cases defined arbitrary. It depends on your websites architecture what will have a bigger impact and what not.</li>
+	<li><strong>100% not achievable: </strong>When your website reaches a certain size, a score of 100% can get unreachable. Most pages will end up with a score between 60-90%. </li>
+	<li><strong>Use Scores as hints: </strong>Don't threat findings always as bugs, rather consider them as opportunities to improve your websites performance. Performance is always a trade for functionality and other things you want to have. Some of the bad grades might be there on purpose.</li>
+</ul>

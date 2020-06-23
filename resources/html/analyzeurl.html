@@ -1,0 +1,26 @@
+
+
+<h1>Analyze URL</h1>
+<div>
+	<p>Choose a URL which should be  analyzed. Currently this works only for pages without a need for authentication. </p>
+</div>
+
+<form class="form" method="post">
+	
+	<div class="form-group">
+		<label for="harFile">URL(HTTP or HTTPS):</label> 
+		<input type="text" class="form-control" name="analyzeurl" id="analyzeurl" />
+	</div>
+	
+	<div class="form-group">
+		<label for="harFile">Name(Optional):</label> 
+		<input type="text" class="form-control" name="resultName" id="resultName" />
+	</div>
+	
+	<div class="form-group">
+		<label for="saveResults">Save Results</label> 
+		<input type="checkbox" name="saveResults" id="saveResults" checked="checked" />
+	</div>		
+	
+	<input type="submit" class="form-control btn btn-primary" value="Submit">
+</form>

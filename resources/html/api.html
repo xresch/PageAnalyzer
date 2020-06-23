@@ -1,0 +1,22 @@
+
+
+<h1>Rest API</h1>
+<div>
+	<p>Rest API which will return the results as JSON. </p>
+	<p>Details:</p>
+	<ul>
+		<li>This page is for testing, use POST requests to use the API.</li>
+		<li>Use the developer tools on this page to get an example request.</li>
+		<li>The .har-File content has to be put into the request body with the field name "harFile".</li>
+	</ul>
+	</div>
+
+<form class="form" enctype="multipart/form-data" method="post">
+	
+	<div class="form-group">
+		<label for="harFile">Select HAR File(max. 100MB):</label> <input type="file"
+			class="form-control" name="harFile" id="harFile" />
+	</div>
+		
+	<input type="submit" class="form-control" value="Submit">
+</form>
