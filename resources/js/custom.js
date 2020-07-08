@@ -680,7 +680,8 @@ function printGanttChart(parent, data){
 			trigger: 'hover',
 			html: true,
 			placement: 'top',
-			title: 'Details',
+			boundary: 'window',
+			//title: 'Details',
 			sanitize: false,
 			content: createGanttTimingDetails(currentEntry)
 		})
