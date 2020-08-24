@@ -43,7 +43,7 @@ public class Main extends Application implements CFWAppInterface {
 	
 	public static final String RESOURCE_PACKAGE = "com.xresch.pageanalyzer.resources";
 	
-	public static Logger logger = CFWLog.getLogger(Main.class.getName());
+	private static final Logger logger = CFWLog.getLogger(Main.class.getName());
 	protected static CFWLog log = new CFWLog(logger);
 	
     public static void main( String[] args ) throws Exception

@@ -21,7 +21,7 @@ import com.xresch.pageanalyzer.db.Result.ResultFields;
  **************************************************************************************************************/
 public class PADBResults {
 
-	public static Logger logger = CFWLog.getLogger(PADBResults.class.getName());
+	private static final Logger logger = CFWLog.getLogger(PADBResults.class.getName());
 	
 	
 	/********************************************************************************************
