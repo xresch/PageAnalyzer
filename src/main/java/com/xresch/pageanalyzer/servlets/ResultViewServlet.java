@@ -37,7 +37,7 @@ public class ResultViewServlet extends HttpServlet
 		log.info(request.getRequestURL().toString());
 			
 		HTMLResponse html = new HTMLResponse("View Result");
-		StringBuffer content = html.getContent();
+		StringBuilder content = html.getContent();
 
 		content.append("<h1>Results</h1>");
 		content.append("<p>Use the links in the menu to change the view. </p>");

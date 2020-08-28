@@ -62,7 +62,7 @@ public class DataServlet extends HttpServlet {
 		// Fetch Data
 		//-------------------------------------------
 		JSONResponse json = new JSONResponse();
-		StringBuffer content = json.getContent();
+		StringBuilder content = json.getContent();
 
 		if (type == null) {
 			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Type was not specified");

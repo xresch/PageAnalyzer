@@ -47,7 +47,7 @@ public class HARUploadServlet extends HttpServlet
 		HTMLResponse html = new HTMLResponse("Analyze");
 		
 		if(CFW.Context.Request.hasPermission(PAPermissions.ANALYZE_HAR)) {
-			StringBuffer content = html.getContent();
+			StringBuilder content = html.getContent();
 			content.append(CFWFiles.getFileContent(request, "./resources/html/harupload.html"));
 			
 	        response.setContentType("text/html");
@@ -66,7 +66,7 @@ public class HARUploadServlet extends HttpServlet
 		log.info(request.getRequestURL().toString());
 			
 		HTMLResponse html = new HTMLResponse("Analyze HAR");
-		StringBuffer content = html.getContent();
+		StringBuilder content = html.getContent();
 		StringBuffer javascript = html.getJavascript();
 		
 		if(CFW.Context.Request.hasPermission(PAPermissions.ANALYZE_HAR)) {

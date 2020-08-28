@@ -41,7 +41,7 @@ public class ManageResultsServlet extends HttpServlet
 		log.info(request.getRequestURL().toString());
 		
 		HTMLResponse html = new HTMLResponse("Manage Results");
-		StringBuffer content = html.getContent();
+		StringBuilder content = html.getContent();
 		
 		if(CFW.Context.Request.hasPermission(PAPermissions.MANAGE_RESULTS)) {
 					

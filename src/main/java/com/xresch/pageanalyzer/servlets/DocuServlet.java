@@ -42,7 +42,7 @@ public class DocuServlet extends HttpServlet {
 		log.info(request.getRequestURL().toString());
 			
 		HTMLResponse html = new HTMLResponse("Documentation");
-		StringBuffer content = html.getContent();
+		StringBuilder content = html.getContent();
 		
 		if(CFW.Context.Request.hasPermission(PAPermissions.VIEW_DOCU)) {
 			content.append(CFWFiles.getFileContent(request, "./resources/html/docu.html"));

@@ -40,7 +40,7 @@ public class DeleteResultServlet extends HttpServlet
 		log.info(request.getRequestURL().toString());
 				
 		JSONResponse jsonResponse = new JSONResponse();
-		StringBuffer content = jsonResponse.getContent();
+		StringBuilder content = jsonResponse.getContent();
 		
 		if(!CFW.Context.Request.hasPermission(PAPermissions.DELETE_RESULT)
 		&& !CFW.Context.Request.hasPermission(PAPermissions.MANAGE_RESULTS)) {

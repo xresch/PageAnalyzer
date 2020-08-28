@@ -38,7 +38,7 @@ public class GanttChartServlet extends HttpServlet
 		log.info(request.getRequestURL().toString());
 			
 		HTMLResponse html = new HTMLResponse("Gantt Chart");
-		StringBuffer content = html.getContent();
+		StringBuilder content = html.getContent();
 
 		//content.append("<h1>Gantt Chart</h1>");
 		//content.append("<p>Use the links in the menu to change the view. </p>");

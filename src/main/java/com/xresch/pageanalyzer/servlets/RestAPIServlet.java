@@ -36,7 +36,7 @@ public class RestAPIServlet extends HttpServlet {
 		log.info(request.getRequestURL().toString());
 			
 		HTMLResponse html = new HTMLResponse("Rest API");
-		StringBuffer content = html.getContent();
+		StringBuilder content = html.getContent();
 		content.append(CFWFiles.getFileContent(request, "./resources/html/api.html"));
 		
 		response.setContentType("text/html");
@@ -53,7 +53,7 @@ public class RestAPIServlet extends HttpServlet {
 		log.info(request.getRequestURL().toString());
 			
 		PlaintextResponse plain = new PlaintextResponse();
-		StringBuffer content = plain.getContent();
+		StringBuilder content = plain.getContent();
 
 		Part harFile = request.getPart("harFile");
 		if (harFile == null) {

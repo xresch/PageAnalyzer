@@ -40,7 +40,7 @@ public class ResultListServlet extends HttpServlet
 		log.info(request.getRequestURL().toString());
 			
 		HTMLResponse html = new HTMLResponse("History");
-		StringBuffer content = html.getContent();
+		StringBuilder content = html.getContent();
 
 		
 		if(CFW.Context.Request.hasPermission(PAPermissions.VIEW_HISTORY)) {

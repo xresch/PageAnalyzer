@@ -37,7 +37,7 @@ public class CompareServlet extends HttpServlet
 		log.info(request.getRequestURL().toString());
 			
 		HTMLResponse html = new HTMLResponse("Compare Results");
-		StringBuffer content = html.getContent();
+		StringBuilder content = html.getContent();
 
 		content.append("<div id=\"results\"></div>");
 		

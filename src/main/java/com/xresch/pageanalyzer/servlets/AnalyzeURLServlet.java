@@ -41,7 +41,7 @@ public class AnalyzeURLServlet extends HttpServlet
 		log.info(request.getRequestURL().toString());
 			
 		HTMLResponse html = new HTMLResponse("Analyze URL");
-		StringBuffer content = html.getContent();
+		StringBuilder content = html.getContent();
 		
 		if(CFW.Context.Request.hasPermission(PAPermissions.ANALYZE_URL)) {
 			content.append(CFWFiles.getFileContent(request, "./resources/html/analyzeurl.html"));
@@ -64,7 +64,7 @@ public class AnalyzeURLServlet extends HttpServlet
 		//--------------------------
 		// Create Content
 		HTMLResponse html = new HTMLResponse("Analyze URL");
-		StringBuffer content = html.getContent();
+		StringBuilder content = html.getContent();
 		
 		if(CFW.Context.Request.hasPermission(PAPermissions.ANALYZE_URL)) {
 			content.append(CFWFiles.getFileContent(request, "./resources/html/analyzeurl.html"));
