@@ -51,7 +51,7 @@ public class CompareServlet extends HttpServlet
 			CFWContextRequest.addAlertMessage(AlertMessage.MessageType.ERROR, "Result IDs '"+resultIDs+"' is not a string of comma separated numbers.");
 		}
 
-		StringBuffer javascript = html.getJavascript();
+		StringBuilder javascript = html.getJavascript();
 		
 		javascript.append("<script defer>");
 			javascript.append("initialize();");

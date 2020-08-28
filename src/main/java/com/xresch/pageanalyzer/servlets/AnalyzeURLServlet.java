@@ -111,7 +111,7 @@ public class AnalyzeURLServlet extends HttpServlet
 				// Prepare Response
 				content.append("<div id=\"results\"></div>");
 				
-				StringBuffer javascript = html.getJavascript();
+				StringBuilder javascript = html.getJavascript();
 				javascript.append("<script defer>");
 				javascript.append("		YSLOW_RESULT = "+results+";\n");
 				javascript.append("		HAR_DATA = "+harContents.replaceAll("</script>", "&lt;/script>")+";\n");

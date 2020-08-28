@@ -55,7 +55,7 @@ public class ManageResultsServlet extends HttpServlet
 										
 				content.append("<div id=\"results\"></div>");
 				
-				StringBuffer javascript = html.getJavascript();
+				StringBuilder javascript = html.getJavascript();
 				javascript.append("<script defer>");
 					javascript.append("initialize();");
 					javascript.append("draw({data: 'allresults', info: 'resultlist', view: ''})");
