@@ -42,8 +42,8 @@ public class ExecutionContextPool {
 	 ***********************************************************************/
 	public static ExecutionContext lockContext() {
 		
-		new CFWLog(logger).method("releaseExecutor")
-		.info("Before Lock: lockedExecutorPool["+lockedContextPool.size()+"], freeExecutorPool["+freeContextPool.size()+"]");
+		new CFWLog(logger)
+			.finer("Before Lock: lockedExecutorPool["+lockedContextPool.size()+"], freeExecutorPool["+freeContextPool.size()+"]");
 		
 		ExecutionContext context = null;
 		while(context == null) {
@@ -61,16 +61,16 @@ public class ExecutionContextPool {
 			if(context == null) {
 				try {
 					Thread.sleep(200);
-					new CFWLog(logger).method("lockExecutor").fine("Thread waiting for free executor.");
+					new CFWLog(logger).fine("Thread waiting for free executor.");
 				} catch (InterruptedException e) {
-					new CFWLog(logger).method("lockExecutor").warn("Thread interrupted while taking a nap.", e);
+					new CFWLog(logger).warn("Thread interrupted while taking a nap.", e);
 					e.printStackTrace();
 				}
 			}
 		}
 		
-		new CFWLog(logger).method("releaseExecutor")
-		.info("After Lock: lockedExecutorPool["+lockedContextPool.size()+"], freeExecutorPool["+freeContextPool.size()+"]");
+		new CFWLog(logger)
+			.finer("After Lock: lockedExecutorPool["+lockedContextPool.size()+"], freeExecutorPool["+freeContextPool.size()+"]");
 		
 		return context;
 	}
@@ -87,7 +87,7 @@ public class ExecutionContextPool {
 			freeContextPool.push(context);
 		}
 
-		new CFWLog(logger).method("releaseExecutor")
+		new CFWLog(logger)
 		.info("After Release: lockedExecutorPool["+lockedContextPool.size()+"], freeExecutorPool["+freeContextPool.size()+"]");
 	}
 

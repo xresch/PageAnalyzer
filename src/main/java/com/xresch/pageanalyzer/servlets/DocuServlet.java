@@ -38,8 +38,6 @@ public class DocuServlet extends HttpServlet {
 	@Override
    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
    {
-		CFWLog log = new CFWLog(logger).method("doGet");
-		log.info(request.getRequestURL().toString());
 			
 		HTMLResponse html = new HTMLResponse("Documentation");
 		StringBuilder content = html.getContent();

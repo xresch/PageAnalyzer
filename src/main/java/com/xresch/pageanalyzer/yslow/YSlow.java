@@ -44,7 +44,7 @@ public class YSlow {
 		
 		CFWLog log = new CFWLog(logger);
 		
-		log.start().method("analyzeHarString");
+		log.start();
 		
 		ExecutionContext context = ExecutionContextPool.lockContext();
 

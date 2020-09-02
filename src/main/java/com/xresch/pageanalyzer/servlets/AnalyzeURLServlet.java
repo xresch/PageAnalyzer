@@ -37,8 +37,6 @@ public class AnalyzeURLServlet extends HttpServlet
 	@Override
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
     {
-		CFWLog log = new CFWLog(logger).method("doGet");
-		log.info(request.getRequestURL().toString());
 			
 		HTMLResponse html = new HTMLResponse("Analyze URL");
 		StringBuilder content = html.getContent();
@@ -57,10 +55,7 @@ public class AnalyzeURLServlet extends HttpServlet
 	 *****************************************************************/
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		CFWLog log = new CFWLog(logger).method("doPost");
-		log.info(request.getRequestURL().toString());
-		
+				
 		//--------------------------
 		// Create Content
 		HTMLResponse html = new HTMLResponse("Analyze URL");
@@ -93,7 +88,7 @@ public class AnalyzeURLServlet extends HttpServlet
 				int jsonIndex = harContents.indexOf("{");
 				if(jsonIndex > 0) {
 					String infoString = harContents.substring(0,jsonIndex-1);
-					log.warn("PhantomJS returned Information: "+ infoString);
+					new CFWLog(logger).warn("PhantomJS returned Information: "+ infoString);
 					harContents = harContents.substring(jsonIndex);
 				}
 				

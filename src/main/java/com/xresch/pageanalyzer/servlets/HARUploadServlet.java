@@ -40,9 +40,6 @@ public class HARUploadServlet extends HttpServlet
 	@Override
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
     {
-		
-		CFWLog log = new CFWLog(logger).method("doGet");
-		log.info(request.getRequestURL().toString());
 			
 		HTMLResponse html = new HTMLResponse("Analyze");
 		
@@ -62,8 +59,6 @@ public class HARUploadServlet extends HttpServlet
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		CFWLog log = new CFWLog(logger).method("doPost");
-		log.info(request.getRequestURL().toString());
 			
 		HTMLResponse html = new HTMLResponse("Analyze HAR");
 		StringBuilder content = html.getContent();
@@ -100,7 +95,7 @@ public class HARUploadServlet extends HttpServlet
 				CFWContextRequest.addAlertMessage(AlertMessage.MessageType.ERROR, "HAR File could not be loaded.");
 			}else {
 	
-				log.start().method("doPost()-StreamHarFile");
+				CFWLog log = new CFWLog(logger).start().method("doPost()-StreamHarFile");
 					String harContents = CFWFiles.readContentsFromInputStream(harFile.getInputStream());
 				log.end();
 							

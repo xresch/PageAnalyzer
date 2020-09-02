@@ -36,10 +36,7 @@ public class DataServlet extends HttpServlet {
 		
 		//-------------------------------------------
 		// Initialize
-		//-------------------------------------------
-		CFWLog log = new CFWLog(logger).method("doGet");
-		log.info(request.getRequestURL().toString());
-		
+		//-------------------------------------------		
 		String type = request.getParameter("type");
 		String resultID = request.getParameter("resultid");
 		if(resultID != null) resultID = resultID.replace("#", "");

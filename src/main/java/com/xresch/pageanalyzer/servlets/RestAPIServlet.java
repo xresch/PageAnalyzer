@@ -32,8 +32,6 @@ public class RestAPIServlet extends HttpServlet {
 	 ******************************************************************/
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		CFWLog log = new CFWLog(logger).method("doGet");
-		log.info(request.getRequestURL().toString());
 			
 		HTMLResponse html = new HTMLResponse("Rest API");
 		StringBuilder content = html.getContent();
@@ -48,10 +46,7 @@ public class RestAPIServlet extends HttpServlet {
 	 ******************************************************************/
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		CFWLog log = new CFWLog(logger).method("doPost");
-		log.info(request.getRequestURL().toString());
-			
+					
 		PlaintextResponse plain = new PlaintextResponse();
 		StringBuilder content = plain.getContent();
 
