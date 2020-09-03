@@ -23,7 +23,7 @@ import com.xresch.pageanalyzer.db.PAPermissions;
 /**************************************************************************************************************
  * 
  * @author Reto Scheiwiller, (c) Copyright 2019 
- * @license Creative Commons: Attribution-NonCommercial-NoDerivatives 4.0 International
+ * @license MIT-License
  **************************************************************************************************************/
 @WebServlet("/docu")
 @MultipartConfig(maxFileSize=1024*1024*100, maxRequestSize=1024*1024*100)

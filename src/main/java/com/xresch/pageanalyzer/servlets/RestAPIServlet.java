@@ -20,7 +20,7 @@ import com.xresch.pageanalyzer.yslow.YSlow;
 /**************************************************************************************************************
  * 
  * @author Reto Scheiwiller, (c) Copyright 2019 
- * @license Creative Commons: Attribution-NonCommercial-NoDerivatives 4.0 International
+ * @license MIT-License
  **************************************************************************************************************/
 public class RestAPIServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
