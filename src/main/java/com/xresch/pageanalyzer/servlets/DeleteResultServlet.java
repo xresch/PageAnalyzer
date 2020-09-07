@@ -54,7 +54,7 @@ public class DeleteResultServlet extends HttpServlet
 			content.append("{\"result\": "+result+"}");
 		}else {
 			content.append("{\"result\": false, \"error\": \"The result could not be deleted: ResultID is not a number.\"}");
-			log.severe("The result could not be deleted: ResultID is not a number.");
+			new CFWLog(logger).severe("The result could not be deleted: ResultID is not a number.");
 		}
 		
 		CFW.HTTP.redirectToReferer(request, response);
