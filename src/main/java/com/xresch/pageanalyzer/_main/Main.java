@@ -8,6 +8,7 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWAppInterface;
 import com.xresch.cfw._main.CFWApplicationExecutor;
+import com.xresch.cfw._main.CFWExtensionApplication;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
@@ -39,6 +40,7 @@ import javafx.stage.Stage;
  * @author Reto Scheiwiller, (c) Copyright 2019 
  * @license MIT-License
  **************************************************************************************************************/
+@CFWExtensionApplication
 public class Main extends Application implements CFWAppInterface {
 	
 	public static final String RESOURCE_PACKAGE = "com.xresch.pageanalyzer.resources";

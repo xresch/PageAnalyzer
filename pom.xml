@@ -4,13 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.xresch</groupId>
 	<artifactId>pageanalyzer</artifactId>
-	<version>1.0.0</version>
+	<version>2.4.0</version>
 
 	<!-- ================= PROPERTIES ================== -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	
+
 	<!-- ================= DEPENDENCIES ================== -->
 	<dependencies>
 		<dependency>
@@ -19,6 +19,21 @@
 			<version>1.0.5</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-base -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-base</artifactId>
+			<version>15</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-web -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-web</artifactId>
+			<version>15</version>
+		</dependency>
+
 	</dependencies>
 
 
@@ -34,6 +49,7 @@
 		</resources>
 
 		<plugins>
+
 			<!-- ================= COMPILER ================== -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -43,7 +59,25 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+
+			<!-- ================= DEPENDENCY ================== -->
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<excludeScope>provided</excludeScope>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
-		
+
+
 	</build>
 </project>
