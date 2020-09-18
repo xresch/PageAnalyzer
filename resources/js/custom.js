@@ -829,7 +829,7 @@ function updateGanttDetails(tab){
 		details += convertNameValueArrayToRow("Cookies", response.cookies);
 		
 		if( typeof response.content.text != "undefined" ){
-			details += '	<tr><td><b>Content:</b></td><td><pre><code>'+response.content.text.replace(/</g, "&lt;")+'</code></pre></td></tr>';
+			details += '	<tr><td><b>Content:</b></td><td><pre class="mvw-75">'+response.content.text.replace(/</g, "&lt;")+'</pre></td></tr>';
 		}
 		details += '</table>';
 	
