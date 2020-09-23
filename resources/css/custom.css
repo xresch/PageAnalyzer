@@ -38,14 +38,16 @@ code {
 }
 
 .gantt-legend{
-	padding: 10px;
-	margin: 10px;
+	padding: 5px;
+	margin: 5px 0px 5px 0px;
 	border: 1px solid lightgray;
 	display: flex;
 }
 
 .gantt-legend-group{
 	margin-right: 20px;
+	display: flex;
+    align-items: center;
 }
 .gantt-legend-square{
 	width: 15px;
@@ -54,7 +56,10 @@ code {
 	margin-right: 5px;
 }
 
-.percentdelta{ background-color: #6277ce; }
+.th-right > div {
+	float: right;
+}
+.percentdelta{ background-color: rgba(0, 128, 255, 0.5); }
 .percentblocked{ background-color: #A60C00; }
 .percentdns{ background-color: #FF8B00; }
 .percentconnect{ background-color: #7F0056; }

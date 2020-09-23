@@ -127,7 +127,7 @@ public class Main extends Application implements CFWAppInterface {
 					.faicon("fas fa-signal")
 					.addPermission(PAPermissions.VIEW_DOCU)
 					.addCssClass("result-view-tabs")
-					.addChild(new MenuItem("Gantt Chart").faicon("fas fa-signal fa-rotate-90")						.onclick("openGanttChartForResult()"))
+					.addChild(new MenuItem("Gantt Chart").faicon("fas fa-signal fa-rotate-90")						.onclick("gantt_statistics_openGanttStatistics()"))
 					.addChild(new MenuItem("Table: Statistics by Type").faicon("fas fa-table")						.onclick("draw({data: 'yslowresult', info: 'stats', view: 'table', stats: 'type'})"))
 					.addChild(new MenuItem("Table: Statistics by Type with primed Cache").faicon("fas fa-table")	.onclick("draw({data: 'yslowresult', info: 'stats', view: 'table', stats: 'type_cached'})"))
 					.addChild(new MenuItem("Table: Components").faicon("fas fa-table")								.onclick("draw({data: 'yslowresult', info: 'stats', view: 'table', stats: 'components'})"))

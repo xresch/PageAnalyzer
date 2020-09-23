@@ -14,6 +14,8 @@ var RULES;
 var STATS_BY_TYPE;
 var STATS_PRIMED_CACHE;
 
+var GANTT_SUMMARY_BY_DOMAINS;
+var GANTT_SUMMARY_BY_DOMAIN_SEQUENCE;
 //object containing the url parameters as name/value pairs {"name": "value", "name2": "value2" ...}
 var URL_PARAMETERS;
 
@@ -113,7 +115,7 @@ function fetchData(args){
 										break;
 										
 				case "har":				HAR_DATA = data.payload;
-										prepareGanttData(HAR_DATA);
+										gantt_statistics_prepareGanttData(HAR_DATA);
 										draw(args);
 										break;
 										
@@ -271,9 +273,11 @@ function prepareYSlowResults(data){
  * @param data the object in HAR format
  * @return nothing
  ******************************************************************/
-function prepareGanttData(data){
+function gantt_statistics_prepareGanttData(data){
 	
 
+	GANTT_SUMMARY_BY_DOMAINS = {};
+	GANTT_SUMMARY_BY_DOMAIN_SEQUENCE = {};
 	//----------------------------------
 	// Variables
 	var entries = data.log.entries; 
@@ -309,7 +313,7 @@ function prepareGanttData(data){
 	// Loop Data
 
 //   "timings": {
-//       "blocked": 0,
+//        "blocked": 0,
 //        "dns": -1,
 //        "connect": -1,
 //        "send": 0,
@@ -318,13 +322,20 @@ function prepareGanttData(data){
 //        "ssl": -1
 //    },
 
+	let lastdomain = null;
+	let sequenceCounter = 0;
+	
 	for(var i = 0; i < entriesCount; i++ ){
-		var entry = entries[i];
-		var startDate = new Date(entry.startedDateTime);
-		var deltaMillis = startDate.valueOf() - dateStartTime.valueOf();
-		var duration = entry.time;
-		var timings = entry.timings;
 		
+		//------------------------------------
+		// Calculate Percentages
+		let entry = entries[i];
+		let startDate = new Date(entry.startedDateTime);
+		let deltaMillis = startDate.valueOf() - dateStartTime.valueOf();
+		let duration = entry.time;
+		let timings = entry.timings;
+		
+//		let timings = entry.timings["delta"] = deltaMillis;
 		entry.ganttdata = {
 			"time": duration,	
 			"delta": deltaMillis,
@@ -345,11 +356,65 @@ function prepareGanttData(data){
 			duration = totalTimeMillis - deltaMillis;
 			entry.ganttdata.percentTime = duration / totalTimeMillis * 100;
 		}
-			
-		//console.log(entry.ganttdata);
 		
+		//------------------------------------
+		// Calculate Summary by Domain
+		let domain = entry.request.url.replace(/(.*?:\/\/)/, '').split("/")[0];
+		
+		if(GANTT_SUMMARY_BY_DOMAINS[domain] != null){
+			GANTT_SUMMARY_BY_DOMAINS[domain].request_count 	+= 1;
+			GANTT_SUMMARY_BY_DOMAINS[domain].total_time		+= entry.time;
+			GANTT_SUMMARY_BY_DOMAINS[domain].total_content_size += entry.response.content.size;
+	
+			GANTT_SUMMARY_BY_DOMAINS[domain].blocked 		+= (entry.timings.blocked != -1) ? entry.timings.blocked : 0 ;
+			GANTT_SUMMARY_BY_DOMAINS[domain].dns 			+= (entry.timings.dns != -1) ? entry.timings.dns : 0 ;
+			GANTT_SUMMARY_BY_DOMAINS[domain].connect 		+= (entry.timings.connect != -1) ? entry.timings.connect : 0 ;
+			GANTT_SUMMARY_BY_DOMAINS[domain].send 			+= (entry.timings.send != -1) ? entry.timings.send : 0 ;
+			GANTT_SUMMARY_BY_DOMAINS[domain].wait 			+= (entry.timings.wait != -1) ? entry.timings.wait : 0  ;
+			GANTT_SUMMARY_BY_DOMAINS[domain].receive 		+= (entry.timings.receive != -1) ? entry.timings.receive : 0 ;
+			GANTT_SUMMARY_BY_DOMAINS[domain].ssl 			+= (entry.timings.ssl != -1) ? entry.timings.ssl : 0 ;
+			GANTT_SUMMARY_BY_DOMAINS[domain].wait 			+= (entry.timings.wait != -1) ? entry.timings.wait : 0  ;
+			
+		} else{
+			GANTT_SUMMARY_BY_DOMAINS[domain] = _.cloneDeep(entry.timings);
+			GANTT_SUMMARY_BY_DOMAINS[domain].domain = domain;
+			GANTT_SUMMARY_BY_DOMAINS[domain].request_count = 1;
+			GANTT_SUMMARY_BY_DOMAINS[domain].total_time = entry.time;
+			GANTT_SUMMARY_BY_DOMAINS[domain].total_content_size = entry.response.content.size;
+			
+		}
+		
+		//------------------------------------
+		// Calculate Summary by Domain Sequence
+		
+		if(lastdomain != domain){ sequenceCounter += 1; }
+		
+		let sequencedDomain = sequenceCounter + " - " + domain; 
+		
+		if(GANTT_SUMMARY_BY_DOMAIN_SEQUENCE[sequencedDomain] != null){
+			GANTT_SUMMARY_BY_DOMAIN_SEQUENCE[sequencedDomain].request_count 	+= 1;
+			GANTT_SUMMARY_BY_DOMAIN_SEQUENCE[sequencedDomain].total_time		+= entry.time;
+			GANTT_SUMMARY_BY_DOMAIN_SEQUENCE[sequencedDomain].total_content_size += entry.response.content.size;
+	
+			GANTT_SUMMARY_BY_DOMAIN_SEQUENCE[sequencedDomain].blocked 		+= (entry.timings.blocked != -1) ? entry.timings.blocked : 0 ;
+			GANTT_SUMMARY_BY_DOMAIN_SEQUENCE[sequencedDomain].dns 			+= (entry.timings.dns != -1) ? entry.timings.dns : 0 ;
+			GANTT_SUMMARY_BY_DOMAIN_SEQUENCE[sequencedDomain].connect 		+= (entry.timings.connect != -1) ? entry.timings.connect : 0 ;
+			GANTT_SUMMARY_BY_DOMAIN_SEQUENCE[sequencedDomain].send 			+= (entry.timings.send != -1) ? entry.timings.send : 0 ;
+			GANTT_SUMMARY_BY_DOMAIN_SEQUENCE[sequencedDomain].wait 			+= (entry.timings.wait != -1) ? entry.timings.wait : 0  ;
+			GANTT_SUMMARY_BY_DOMAIN_SEQUENCE[sequencedDomain].receive 		+= (entry.timings.receive != -1) ? entry.timings.receive : 0 ;
+			GANTT_SUMMARY_BY_DOMAIN_SEQUENCE[sequencedDomain].ssl 			+= (entry.timings.ssl != -1) ? entry.timings.ssl : 0 ;
+			GANTT_SUMMARY_BY_DOMAIN_SEQUENCE[sequencedDomain].wait 			+= (entry.timings.wait != -1) ? entry.timings.wait : 0  ;
+			
+		} else{
+			GANTT_SUMMARY_BY_DOMAIN_SEQUENCE[sequencedDomain] = _.cloneDeep(entry.timings);
+			GANTT_SUMMARY_BY_DOMAIN_SEQUENCE[sequencedDomain].domain = sequencedDomain;
+			GANTT_SUMMARY_BY_DOMAIN_SEQUENCE[sequencedDomain].request_count = 1;
+			GANTT_SUMMARY_BY_DOMAIN_SEQUENCE[sequencedDomain].total_time = entry.time;
+			GANTT_SUMMARY_BY_DOMAIN_SEQUENCE[sequencedDomain].total_content_size = entry.response.content.size;
+			
+		}
+		lastdomain = domain;	
 	}
-
 }
 
 /**************************************************************************************
@@ -443,7 +508,7 @@ function printComparison(parent, data){
 		//----------------------------
 		// URL Row
 		url = CFW.http.secureDecodeURI(result.u);
-		urlRow[time]	= '<a class="mvw-30 word-break-word" target="_blank" href="'+url+'">'+url+'</a>';
+		urlRow[time]	= '<a class="maxvw-30 word-break-word" target="_blank" href="'+url+'">'+url+'</a>';
 		
 		//----------------------------
 		// Score Row
@@ -487,7 +552,7 @@ function printComparison(parent, data){
  * @param data HAR file data
  * @param type either "Cookies" or "Headers"
  ******************************************************************/
-function createAnalyzeDropdown(parent, data, type){
+function gantt_statistics_createAnalyzeDropdown(parent, data, type){
 		
 	//---------------------------------------------
 	// Loop entries and get distinct cookie names
@@ -612,11 +677,8 @@ function analyzeCookiesOrHeaders(key, type){
 /******************************************************************
  * Print the gantt chart for the entries.
  * 
- * @param parent JQuery object 
- * @param data HAR file data
- * 
  ******************************************************************/
-function openGanttChartForResult(){
+function gantt_statistics_openGanttStatistics(){
 	
 	if(URL_PARAMETERS.resultid != null){
 		var w = window.open(CFW.http.getHostURL()+"/app/ganttchart?resultid="+URL_PARAMETERS.resultid);	
@@ -625,103 +687,7 @@ function openGanttChartForResult(){
 	}
 	
 }
-/******************************************************************
- * Print the gantt chart for the entries.
- * 
- * @param parent JQuery object 
- * @param data HAR file data
- * 
- ******************************************************************/
-function printGanttChart(parent, data){
-	
-	//----------------------------------
-	// Add title and description.
-	parent.append("<h2>Gantt Chart</h2>");
 
-	createAnalyzeDropdown(parent, data, "Cookies");
-	createAnalyzeDropdown(parent, data, "Headers");
-
-	
-	//----------------------------------
-	// Create Table Header
-	var cfwTable = new CFWTable({filterable: true, narrow: true});;
-
-	cfwTable.addHeaders(['&nbsp;','Timings','Status','Duration','URL']);
-
-	//----------------------------------
-	// Create Rows
-	var entries = data.log.entries; 
-	var entriesCount = entries.length;
-	for(var i = 0; i < entriesCount; i++ ){
-		var currentEntry = entries[i];
-		
-		var row = $('<tr>');
-		
-		//--------------------------
-		// Details Link
-		var detailsLinkTD = $('<td>');
-		var detailsLink = $('<a alt="Show Details" onclick="showGanttDetails(this)"><i class="fa fa-search"></i></a>');
-		detailsLink.data("entry", currentEntry);
-		detailsLinkTD.append(detailsLink);
-		
-		
-		row.append(detailsLinkTD);
-		
-		//--------------------------
-		// Gantt Chart Column
-
-		var gd = currentEntry.ganttdata;
-		//workaround for wrong timing deviations
-		var shortPercentDelta = (gd.percentdelta >= 1) ? Math.floor(gd.percentdelta-1): gd.percentdelta;
-		var shortPercentTime = (gd.percenttime >= 2) ? Math.floor(gd.percenttime-1): gd.percenttime;
-				
-		var ganttWrapper = $('<div class="ganttWrapper" style="width: 500px;">');
-		ganttWrapper.popover({
-			trigger: 'hover',
-			html: true,
-			placement: 'top',
-			boundary: 'window',
-			//title: 'Details',
-			sanitize: false,
-			content: createGanttTimingDetails(currentEntry)
-		})
-		
-		console.log(createGanttTimingDetails(currentEntry));
-		ganttWrapper.append(
-			 '<div class="ganttBlock percentdelta" style="width: '+shortPercentDelta+'%">&nbsp;</div>'
-			+'<div class="ganttBlock ganttTimings" style="width: '+shortPercentTime+'%">'
-			+ createGanttBar(currentEntry, "blocked")
-			+ createGanttBar(currentEntry, "dns")
-			+ createGanttBar(currentEntry, "connect")
-				//rowString += createGanttBar(currentEntry, "ssl");
-			+ createGanttBar(currentEntry, "send")
-			+ createGanttBar(currentEntry, "wait")
-			+ createGanttBar(currentEntry, "receive")
-		);
-		
-		var cell = $('<td>');
-		cell.append(ganttWrapper);
-		row.append(cell);
-		
-		// --------------------------
-		// Other Columns
-		var  rowString = '';
-		rowString += '<td>'+createHTTPStatusBadge(currentEntry.response.status)+'</td>';
-		rowString += '<td>'+Math.round(currentEntry.time)+' ms</td>';
-		rowString += '<td>'+CFW.http.secureDecodeURI(currentEntry.request.url)+'</td>';
-		
-		row.append(rowString);
-		
-		
-		cfwTable.addRow(row);
-	}
-	
-	var legendHTML = createGanttChartLegend();
-	parent.append(legendHTML);
-	cfwTable.appendTo(parent);
-	parent.append(legendHTML);
-	
-}
 
 
 /******************************************************************
@@ -731,13 +697,23 @@ function printGanttChart(parent, data){
  * @param metric 
  * @return the HTML for the bar in the gantt chart
  ******************************************************************/
-function createGanttBar(entry, metric){
+function gantt_statistics_createBarPart(entry, metric){
 	
+	var gd = entry.ganttdata;
+	
+
 	var percentString = "percent"+metric;
 	
-	// Workaround: Reduce size by 5% with "/100*95" to minimize display issues
-	if(entry.ganttdata[percentString] > 0){ 
-		return '<div class="ganttBlock '+percentString+'" style="width: '+Math.floor(entry.ganttdata[percentString]/100*95)+'%">&nbsp;</div>'
+
+	if(gd[percentString] > 0){ 
+		if(percentString == "percentdelta"){
+			//workaround for wrong timing deviations
+			var shortPercentDelta = (gd.percentdelta >= 1) ? Math.floor(gd.percentdelta-1): gd.percentdelta;
+			return '<div class="ganttBlock '+percentString+'" style="width: '+shortPercentDelta+'%">&nbsp;</div>';
+		}else{
+			// Workaround: Reduce size by 5% with "/100*95" to minimize display issues
+			return '<div class="ganttBlock '+percentString+'" style="width: '+Math.floor(gd[percentString]/100*95)+'%">&nbsp;</div>';
+		}
 	}else{
 		return "";
 	}
@@ -750,7 +726,7 @@ function createGanttBar(entry, metric){
  * event. Has an attached har-entry with JQuery $().data()
  * 
  ******************************************************************/
-function showGanttDetails(element){
+function gantt_statistics_showDetailsModal(element){
 	
 	//-----------------------------------------
 	// Initialize
@@ -764,11 +740,11 @@ function showGanttDetails(element){
 	// Print Tabs
 	//-----------------------------------------
 	htmlString  = '<ul id="tabs" class="nav nav-tabs">';
-	htmlString += '    <li class="nav-item"><a class="nav-link" href="#" onclick="updateGanttDetails(\'request\')">Request</a></li>';
-	htmlString += '    <li class="nav-item"><a class="nav-link" href="#" onclick="updateGanttDetails(\'response\')">Response</a></li>';
-	htmlString += '    <li class="nav-item"><a class="nav-link" href="#" onclick="updateGanttDetails(\'cookies\')">Cookies</a></li>';
-	htmlString += '    <li class="nav-item"><a class="nav-link" href="#" onclick="updateGanttDetails(\'headers\')">Headers</a></li>';
-	htmlString += '    <li class="nav-item"><a class="nav-link" href="#" onclick="updateGanttDetails(\'timings\')">Timings</a></li>';
+	htmlString += '    <li class="nav-item"><a class="nav-link" href="#" onclick="gantt_statistics_updateDetailsModal(\'request\')">Request</a></li>';
+	htmlString += '    <li class="nav-item"><a class="nav-link" href="#" onclick="gantt_statistics_updateDetailsModal(\'response\')">Response</a></li>';
+	htmlString += '    <li class="nav-item"><a class="nav-link" href="#" onclick="gantt_statistics_updateDetailsModal(\'cookies\')">Cookies</a></li>';
+	htmlString += '    <li class="nav-item"><a class="nav-link" href="#" onclick="gantt_statistics_updateDetailsModal(\'headers\')">Headers</a></li>';
+	htmlString += '    <li class="nav-item"><a class="nav-link" href="#" onclick="gantt_statistics_updateDetailsModal(\'timings\')">Timings</a></li>';
 	htmlString += '</ul>';
 	
 	htmlString += '<div id="ganttDetails"></div>';
@@ -778,7 +754,7 @@ function showGanttDetails(element){
 	//-----------------------------------------
 	CFW.ui.showModal('Details', htmlString);
 			
-	updateGanttDetails('request');
+	gantt_statistics_updateDetailsModal('request');
 
 	
 }
@@ -789,7 +765,7 @@ function showGanttDetails(element){
  * @param tab specify what tab should be printed.
  * 
  ******************************************************************/
-function updateGanttDetails(tab){
+function gantt_statistics_updateDetailsModal(tab){
 	
 	var target = $('#ganttDetails');
 	target.html('');
@@ -829,7 +805,7 @@ function updateGanttDetails(tab){
 		details += convertNameValueArrayToRow("Cookies", response.cookies);
 		
 		if( typeof response.content.text != "undefined" ){
-			details += '	<tr><td><b>Content:</b></td><td><pre class="mvw-75">'+response.content.text.replace(/</g, "&lt;")+'</pre></td></tr>';
+			details += '	<tr><td><b>Content:</b></td><td><pre class="maxvw-75">'+response.content.text.replace(/</g, "&lt;")+'</pre></td></tr>';
 		}
 		details += '</table>';
 	
@@ -848,7 +824,7 @@ function updateGanttDetails(tab){
 		
 	}else if(tab === 'timings'){
 				
-		details += createGanttTimingDetails(entry);
+		details += gantt_statistics_createTimingDetails(entry);
 		
 	}
 	
@@ -861,31 +837,37 @@ function updateGanttDetails(tab){
  * 
  * @return html string
  ******************************************************************/
-function createGanttTimingDetails(entry){
+function gantt_statistics_createTimingDetails(entry){
 	var htmlString = '';
 	htmlString += '<div>';
 		htmlString += '<div class="ganttBlock ganttTimings" style="width: 100%">';
-		htmlString += createGanttBar(entry, "blocked");
-		htmlString += createGanttBar(entry, "dns");
-		htmlString += createGanttBar(entry, "connect");
-		//htmlString += createGanttBar(currentEntry, "ssl");
-		htmlString += createGanttBar(entry, "send");
-		htmlString += createGanttBar(entry, "wait");
-		htmlString += createGanttBar(entry, "receive");
+		htmlString += gantt_statistics_createBarPart(entry, "blocked");
+		htmlString += gantt_statistics_createBarPart(entry, "dns");
+		htmlString += gantt_statistics_createBarPart(entry, "connect");
+		//htmlString += gantt_statistics_createBarPart(currentEntry, "ssl");
+		htmlString += gantt_statistics_createBarPart(entry, "send");
+		htmlString += gantt_statistics_createBarPart(entry, "wait");
+		htmlString += gantt_statistics_createBarPart(entry, "receive");
 		htmlString += '</div>';
 		
 		htmlString += '<table class="table table-striped table-sm">';
 		htmlString += '<thead><tr><th>&nbsp;</th><th>Metric</th><th>Time</th><th>Percent</th></tr></thead>'
-		var metrics = ['blocked','dns','connect','ssl','send','wait','receive'];
+		var metrics = ['delta','blocked','dns','connect','ssl','send','wait','receive'];
 
 		for(i = 0; i < metrics.length; i++){
-			
+
 			var metric = metrics[i];
 			htmlString += '<tr>';
 			htmlString += '	<td><div class="gantt-legend-square percent'+metric+'">&nbsp;</div></td>';
 			htmlString += '	<td><b>'+metric+':</b></td>';
 			htmlString += '	<td>'+Math.round(entry.timings[metric] * 100) / 100+' ms</td>';
-			htmlString += '	<td>'+Math.round(entry.ganttdata["percent"+metric] * 100) / 100+'%</td>'
+				
+				if(metric !== "delta"){
+					htmlString += '	<td>'+Math.round(entry.ganttdata["percent"+metric] * 100) / 100+'%</td>'
+				}else{
+					htmlString += '	<td>&nbsp;</td>'
+				}
+		
 			htmlString += '</tr>'; 
 		}
 		htmlString += '</table>';
@@ -899,7 +881,7 @@ function createGanttTimingDetails(entry){
  * 
  * @return html string
  ******************************************************************/
-function createGanttChartLegend(){
+function gantt_statistics_createChartLegend(){
 	
 	var metrics = ['blocked','dns','connect',/*'ssl,*/'send','wait','receive'];
 	
@@ -917,6 +899,288 @@ function createGanttChartLegend(){
 	return legend;
 	
 }
+
+/******************************************************************
+ * Print the gantt chart for the entries.
+ * 
+ * @param parent JQuery object 
+ * @param data HAR file data
+ * 
+ ******************************************************************/
+function gantt_statistics_printChart(parent, data){
+	
+	//----------------------------------
+	// Add title and description.
+	parent.append("<h2>Gantt Chart</h2>");
+
+	gantt_statistics_createAnalyzeDropdown(parent, data, "Cookies");
+	gantt_statistics_createAnalyzeDropdown(parent, data, "Headers");
+	
+	//----------------------------------
+	// Create Table Header
+	var cfwTable = new CFWTable({filterable: true, narrow: true});;
+
+	cfwTable.addHeaders(['&nbsp;','Timings','Status','Duration', 'Size','URL']);
+
+	//----------------------------------
+	// Create Rows
+	var entries = data.log.entries; 
+	var entriesCount = entries.length;
+	for(var i = 0; i < entriesCount; i++ ){
+		var currentEntry = entries[i];
+		
+		var row = $('<tr>');
+		
+		//--------------------------
+		// Details Link
+		var detailsLinkTD = $('<td>');
+		var detailsLink = $('<a alt="Show Details" onclick="gantt_statistics_showDetailsModal(this)"><i class="fa fa-search"></i></a>');
+		detailsLink.data("entry", currentEntry);
+		detailsLinkTD.append(detailsLink);
+		
+		
+		row.append(detailsLinkTD);
+		
+		//--------------------------
+		// Gantt Chart Column
+
+		var gd = currentEntry.ganttdata;
+		//workaround for wrong timing deviations
+		var shortPercentDelta = (gd.percentdelta >= 1) ? Math.floor(gd.percentdelta-1): gd.percentdelta;
+		var shortPercentTime = (gd.percenttime >= 2) ? Math.floor(gd.percenttime-1): gd.percenttime;
+				
+		var ganttWrapper = $('<div class="ganttWrapper vw-25">');
+		ganttWrapper.popover({
+			trigger: 'hover',
+			html: true,
+			placement: 'top',
+			boundary: 'window',
+			//title: 'Details',
+			sanitize: false,
+			content: gantt_statistics_createTimingDetails(currentEntry)
+		})
+		
+		ganttWrapper.append(
+			  gantt_statistics_createBarPart(currentEntry, "delta")
+			+'<div class="ganttBlock ganttTimings" style="width: '+shortPercentTime+'%">'
+				+ gantt_statistics_createBarPart(currentEntry, "blocked")
+				+ gantt_statistics_createBarPart(currentEntry, "dns")
+				+ gantt_statistics_createBarPart(currentEntry, "connect")
+					//rowString += gantt_statistics_createBarPart(currentEntry, "ssl");
+				+ gantt_statistics_createBarPart(currentEntry, "send")
+				+ gantt_statistics_createBarPart(currentEntry, "wait")
+				+ gantt_statistics_createBarPart(currentEntry, "receive")
+			+'</div>'
+		);
+		
+		var cell = $('<td>');
+		cell.append(ganttWrapper);
+		row.append(cell);
+		
+		// --------------------------
+		// Other Columns
+		var  rowString = '';
+		rowString += '<td>'+createHTTPStatusBadge(currentEntry.response.status)+'</td>';
+		rowString += '<td><span class="word-wrap-none float-right">'+Math.round(currentEntry.time)+' ms</span></td>';
+		rowString += '<td><span class="word-wrap-none float-right ">'+(currentEntry.response.content.size/1000).toFixed(1)+' KB</span></td>';
+		
+		rowString += '<td>'+CFW.http.secureDecodeURI(currentEntry.request.url)+'</td>';
+		
+		row.append(rowString);
+		
+		
+		cfwTable.addRow(row);
+	}
+	
+	var legendHTML = gantt_statistics_createChartLegend();
+	parent.append(legendHTML);
+	cfwTable.appendTo(parent);
+	parent.append(legendHTML);
+	
+}
+
+/******************************************************************
+ * Print the list of roles;
+ * 
+ * @param data as returned by CFW.http.getJSON()
+ * @return 
+ ******************************************************************/
+function gantt_statistics_printSummaryByDomains(parent){
+	
+	//--------------------------------
+	// Create Table
+	
+	if(GANTT_SUMMARY_BY_DOMAINS != undefined){
+		
+		//--------------------------------
+		// prepare Array
+		let tableArray = [];
+		for(key in GANTT_SUMMARY_BY_DOMAINS){
+			tableArray.push(GANTT_SUMMARY_BY_DOMAINS[key]);
+		}
+		
+		//-----------------------------------
+		// Render Data
+		var formatMillis = function(record, value) { 
+			return '<span class="word-wrap-none float-right">'+( (value == -1) ? '-</span>' : Math.round(value)+' ms</span>'); };
+		var rendererSettings = {
+				data: tableArray,
+			 	idfield: 'HOST',
+			 	bgstylefield: null,
+			 	textstylefield: null,
+			 	titlefields: ['NAME'],
+			 	titledelimiter: ' ',
+			 	visiblefields: ['domain', 'request_count', 'total_content_size', 'total_time', /*'delta',*/ 'blocked','dns','connect','ssl','send','wait','receive'],
+			 	labels: {
+			 		//delta: "Start Offset",
+			 	},
+			 	customizers: {
+			 		total_time: formatMillis,
+			 		delta: formatMillis,
+			 		blocked: formatMillis,
+			 		dns: formatMillis,
+			 		connect: formatMillis,
+			 		ssl: formatMillis,
+			 		send: formatMillis,
+			 		wait: formatMillis,
+			 		receive: formatMillis,
+			 		total_content_size: function(record, value) { return '<span class="word-wrap-none float-right">'+(value/1000).toFixed(1)+' KB</span>'; }
+			 	},
+//				bulkActions: {
+//					"Edit": function (elements, records, values){ alert('Edit records '+values.join(',')+'!'); },
+//					"Delete": function (elements, records, values){ $(elements).remove(); },
+//				},
+//				bulkActionsPos: "both",
+
+				rendererSettings: {
+					table: {
+						narrow: true, 
+						filterable: true,
+						headerclasses: ["", "", "th-right", "th-right", "th-right", "th-right", "th-right", "th-right", "th-right", "th-right", "th-right", "th-right"]
+					}
+				},
+			};
+				
+		var renderResult = CFW.render.getRenderer('table').render(rendererSettings);	
+		
+		parent.append('<h2>Summary by Domain</h2>');
+		parent.append('<p>Table with summaries by domain. Gives a good overview from which domain the most data is recieved, as well as where the most time i spent.</p>');
+		parent.append(renderResult);
+		
+	}
+}
+
+/******************************************************************
+ * Print the list of roles;
+ * 
+ * @param data as returned by CFW.http.getJSON()
+ * @return 
+ ******************************************************************/
+function gantt_statistics_printSummaryByDomainSequence(parent){
+	
+	//--------------------------------
+	// Create Table
+	
+	if(GANTT_SUMMARY_BY_DOMAIN_SEQUENCE != undefined){
+		
+		//--------------------------------
+		// prepare Array
+		let tableArray = [];
+		for(key in GANTT_SUMMARY_BY_DOMAIN_SEQUENCE){
+			tableArray.push(GANTT_SUMMARY_BY_DOMAIN_SEQUENCE[key]);
+		}
+		
+		//-----------------------------------
+		// Render Data
+		var formatMillis = function(record, value) { 
+			return '<span class="word-wrap-none float-right">'+( (value == -1) ? '-</span>' : Math.round(value)+' ms</span>'); };
+		var rendererSettings = {
+				data: tableArray,
+			 	idfield: 'HOST',
+			 	bgstylefield: null,
+			 	textstylefield: null,
+			 	titlefields: ['NAME'],
+			 	titledelimiter: ' ',
+			 	visiblefields: ['domain', 'request_count', 'total_content_size', 'total_time', /*'delta',*/ 'blocked','dns','connect','ssl','send','wait','receive'],
+			 	labels: {
+			 		//delta: "Start Offset",
+			 	},
+			 	customizers: {
+			 		total_time: formatMillis,
+			 		delta: formatMillis,
+			 		blocked: formatMillis,
+			 		dns: formatMillis,
+			 		connect: formatMillis,
+			 		ssl: formatMillis,
+			 		send: formatMillis,
+			 		wait: formatMillis,
+			 		receive: formatMillis,
+			 		total_content_size: function(record, value) { return '<span class="word-wrap-none float-right">'+(value/1000).toFixed(1)+' KB</span>'; }
+			 	},
+//				bulkActions: {
+//					"Edit": function (elements, records, values){ alert('Edit records '+values.join(',')+'!'); },
+//					"Delete": function (elements, records, values){ $(elements).remove(); },
+//				},
+//				bulkActionsPos: "both",
+
+				rendererSettings: {
+					table: {
+						narrow: true, 
+						filterable: true,
+						headerclasses: ["", "", "th-right", "th-right", "th-right", "th-right", "th-right", "th-right", "th-right", "th-right", "th-right", "th-right"]
+					}
+				},
+			};
+				
+		var renderResult = CFW.render.getRenderer('table').render(rendererSettings);	
+		
+		parent.append('<h2>Summary by Domain Sequence</h2>');
+		parent.append('<p>Table with summaries by domain in sequence. Only consecutive calls to the same domain will be summarized. This can be useful to analyze page requests that "switch" between multiple servers to access the page, like a single sing-on mechanism.</p>');
+		parent.append(renderResult);
+		
+	}
+}
+
+/******************************************************************
+ * Print the list of roles;
+ * 
+ * @param data as returned by CFW.http.getJSON()
+ * @return 
+ ******************************************************************/
+function gantt_statistics_printTerms(parent){
+	
+	var terms = [
+		{term:"blocked", description:" Time spent in a queue waiting for a network connection.  (-1 if the timing does not apply to the current request)"},
+		{term:"dns", description:" DNS resolution time. The time required to resolve a host name.  (-1 if the timing does not apply to the current request)"},
+		{term:"connect", description:" Time required to create TCP connection. (-1 if the timing does not apply to the current request)"},
+		{term:"send", description:" Time required to send HTTP request to the server."},
+		{term:"wait", description:" Waiting for a response from the server."},
+		{term:"receive", description:" Time required to read entire response from the server (or cache)."},
+		{term:"ssl", description:" Time required for SSL/TLS negotiation. If this field is defined then the time is also included in the connect field (to ensure backward compatibility with HAR 1.1). (-1 if the timing does not apply to the current request)"},
+	];
+	
+	var rendererSettings = {
+			data: terms,
+
+		 	customizers: {
+		 		term: function(record, value) { return '<strong>'+value+'</strong>'; }
+		 	},
+
+		 	rendererSettings: {
+				table: {
+					narrow: true, 
+					filterable: true,
+				}
+			},
+		};
+	
+	var renderResult = CFW.render.getRenderer('table').render(rendererSettings);	
+	
+	parent.append('<h2>Terms</h2>');
+	parent.append('<p>Description of some terms used on this page.</p>');
+	parent.append(renderResult);
+}
+
 /******************************************************************
  * Converts a array with name/value pairs to a two column table row.
  * 
@@ -955,6 +1219,7 @@ function createHTTPStatusBadge(status){
 	
 	return '<span class="badge btn-'+style+'">'+status+"</span>";
 }
+
 /******************************************************************
  * Print the list of results found in the database.
  * 
@@ -1004,7 +1269,7 @@ function printResultList(parent, data){
 		rowString += '<td>'+resultName+'</td>';
 		// URL Column
 		url = CFW.http.secureDecodeURI(currentData.PAGE_URL);
-		rowString += '<td class="mvw-30 word-break-word">'+url+'</td>';
+		rowString += '<td class="maxvw-30 word-break-word">'+url+'</td>';
 		
 		// View Result Icon
 		rowString += '<td><a class="btn btn-primary btn-sm" alt="View Result" title="View Result" href="./resultview?resultid='+currentData.PK_ID+'"><i class="fa fa-eye"></i></a></td>';
@@ -1511,10 +1776,13 @@ function draw(options){
 			case "resultlist":		printResultList($(RESULTS_DIV), RESULT_LIST);
 									break;
 									
-			case "ganttchart":		printGanttChart($(RESULTS_DIV), HAR_DATA);
+			case "ganttchart":		gantt_statistics_printChart(RESULTS_DIV, HAR_DATA);
+									gantt_statistics_printSummaryByDomains(RESULTS_DIV);
+									gantt_statistics_printSummaryByDomainSequence(RESULTS_DIV);
+									gantt_statistics_printTerms(RESULTS_DIV);
 									break;	
 			
-			case "compareyslow":	printComparison($(RESULTS_DIV), COMPARE_YSLOW);
+			case "compareyslow":	printComparison(RESULTS_DIV, COMPARE_YSLOW);
 									break;	
 									
 			case "overview": 		printSummary(RESULTS_DIV);
