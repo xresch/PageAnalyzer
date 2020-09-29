@@ -1029,7 +1029,7 @@ function gantt_statistics_printSummaryByDomains(parent){
 			 	bgstylefield: null,
 			 	textstylefield: null,
 			 	titlefields: ['NAME'],
-			 	titledelimiter: ' ',
+			 	titleformat: '{0}',
 			 	visiblefields: ['domain', 'request_count', 'total_content_size', 'total_time', /*'delta',*/ 'blocked','dns','connect','ssl','send','wait','receive'],
 			 	labels: {
 			 		//delta: "Start Offset",
@@ -1100,7 +1100,7 @@ function gantt_statistics_printSummaryByDomainSequence(parent){
 			 	bgstylefield: null,
 			 	textstylefield: null,
 			 	titlefields: ['NAME'],
-			 	titledelimiter: ' ',
+			 	titleformat: '{0}',
 			 	visiblefields: ['domain', 'request_count', 'total_content_size', 'total_time', /*'delta',*/ 'blocked','dns','connect','ssl','send','wait','receive'],
 			 	labels: {
 			 		//delta: "Start Offset",
