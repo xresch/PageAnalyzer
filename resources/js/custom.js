@@ -1312,12 +1312,18 @@ function printResultList(parent, data){
 			//Delete Result
 			if (CFW.hasPermission("Delete Result")){
 				return '<button class="btn btn-danger btn-sm" alt="Delete Result" title="Delete Result" '
-				+' onclick="CFW.ui.confirmExecute(\'Do you want to delete the results?\', \'Delete\', \'deleteResults('+id+')\')"><i class="fa fa-trash"></i></button>';
+				+' onclick="deleteResults('+id+')"><i class="fa fa-trash"></i></button>';
 			}else{
 				return '&nbsp;';
 			}
 	});
 
+	//-------------------------
+	// Visible fields
+	let visiblefields = ['TIME_CREATED', 'NAME', 'PAGE_URL'];
+	if(data[0] != null && data[0].USERNAME != undefined){
+		visiblefields = ['TIME_CREATED', 'USERNAME', 'NAME', 'PAGE_URL'];
+	}
 	
 	//-----------------------------------
 	// Render Data
@@ -1328,7 +1334,7 @@ function printResultList(parent, data){
 		 	textstylefield: null,
 		 	titlefields: ['NAME', 'PAGE_URL'],
 		 	titleformat: '{0} {1}',
-		 	visiblefields: ['NAME', 'PAGE_URL'],
+		 	visiblefields: visiblefields,
 		 	labels: {
 		 		PAGE_URL: "URL",
 		 	},
@@ -1340,11 +1346,13 @@ function printResultList(parent, data){
 		 			}
 		 	},
 			actions: actionButtons,
-//			bulkActions: {
-//				"Edit": function (elements, records, values){ alert('Edit records '+values.join(',')+'!'); },
-//				"Delete": function (elements, records, values){ $(elements).remove(); },
-//			},
-//			bulkActionsPos: "both",
+			
+			bulkActions: {
+				"Compare": function (elements, records, values){ compareResults(elements, records, values); },
+				"Delete": function (elements, records, values){ deleteResults(values.join(",")); },
+
+			},
+			bulkActionsPos: "both",
 			
 			rendererSettings: {
 				dataviewer: {
@@ -1515,15 +1523,14 @@ function resultSelectionChanged(){
 /**************************************************************************************
  * Load the comparison page for the selected results.
  *************************************************************************************/
-function compareResults(){
+function compareResults(elements, records, values){
 		
-	var resultIDs = "";
-	$.each($(".resultSelectionCheckbox:checked"), function(){
-		resultIDs += $(this).val()+",";
-	});
-	resultIDs = resultIDs.slice(0,-1);
+	if(values.length < 2){
+		CFW.ui.addToastInfo('Select at least two results for the comparison.');
+		return;
+	}
 	
-	self.location = "./compare?resultids="+resultIDs;
+	self.location = "./compare?resultids="+values.join(',');
 	
 }
 
@@ -1533,16 +1540,10 @@ function compareResults(){
  *************************************************************************************/
 function deleteResults(resultIDs){
 	
-	if(resultIDs == null){
-		var resultIDs = "";
-		$.each($(".resultSelectionCheckbox:checked"), function(){
-			resultIDs += $(this).val()+",";
-		});
-		resultIDs = resultIDs.slice(0,-1);
-	}
-	
-	
-	self.location = "./delete?resultids="+resultIDs;
+	CFW.ui.confirmExecute('Are you sure you want to delete the selected results?', 'Do it!', function(){
+			
+		self.location = "./delete?resultids="+resultIDs;
+	});
 	
 }
 
