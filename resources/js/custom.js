@@ -1229,10 +1229,178 @@ function createHTTPStatusBadge(status){
  ******************************************************************/
 function printResultList(parent, data){
 	
-	//----------------------------------
+	//======================================
 	// Add title and description.
 	parent.append("<h2>Result History</h2>");
 	parent.append("<p>Click on the eye symbol to open a result. Select multiple results and hit compare to get a comparison.</p>");
+
+	//======================================
+	// Prepare actions
+	var actionButtons = [];
+		
+	//-------------------------
+	// View Button
+	actionButtons.push(
+		function (record, id){ 
+			return '<a class="btn btn-primary btn-sm" alt="View Result" title="View Result"'
+					+' href="./resultview?resultid='+id+'"><i class="fa fa-eye"></i></a>';
+
+		});
+
+	//-------------------------
+	// Open Gantt Chart Button	
+	actionButtons.push(
+		function (record, id){
+			return '<a class="btn btn-primary btn-sm" alt="View Gantt Chart" title="View Gantt Chart"'
+				+' href="./ganttchart?resultid='+id+'"><i class="fas fa-signal fa-rotate-90"></i></a>';
+	});
+	
+	//-------------------------
+	// Open Link Button
+	actionButtons.push(
+		function (record, id){
+			return '<a class="btn btn-primary btn-sm" target="_blank" alt="Open URL" title="Open URL"'
+			+' href="'+CFW.http.secureDecodeURI(record.PAGE_URL)+'"><i class="fa fa-link"></i></a>';
+
+		});
+	
+
+	//-------------------------
+	// Save Result Button
+	actionButtons.push(
+		function (record, id){
+			var regex = /.*?http.?:\/\/([^\/]*)/g;
+			var matches = regex.exec(CFW.http.secureDecodeURI(record.PAGE_URL));
+			
+			var resultName = "result";
+			if(matches != null){
+				resultName = matches[1];
+			}
+						
+			return '<a class="btn btn-primary btn-sm" target="_blank" alt="Download Result" title="Download Result" '
+			+' href=./data?type=yslowresult&resultid='+id+' download="'+resultName+'_yslow_results.json"><i class="fa fa-save"></i></a>';
+	});
+	
+	
+	//-------------------------
+	// Download HAR Button
+	actionButtons.push(
+		function (record, id){
+			if (CFW.hasPermission("Download HAR")){
+				
+				var regex = /.*?http.?:\/\/([^\/]*)/g;
+				var matches = regex.exec(CFW.http.secureDecodeURI(record.PAGE_URL));
+				
+				var resultName = "result";
+				if(matches != null){
+					resultName = matches[1];
+				}
+				
+				return '<a class="btn btn-primary btn-sm" target="_blank" alt="Dowload HAR" title="Dowload HAR" '
+				+ ' href=./data?type=hardownload&resultid='+id+' download="'+resultName+'.har"><i class="fa fa-download"> HAR</i></a>';
+			}else{
+				return '&nbsp;';
+			}
+
+		});
+	
+
+	//-------------------------
+	// Delete Button
+	actionButtons.push(
+		function (record, id){
+			//Delete Result
+			if (CFW.hasPermission("Delete Result")){
+				return '<button class="btn btn-danger btn-sm" alt="Delete Result" title="Delete Result" '
+				+' onclick="CFW.ui.confirmExecute(\'Do you want to delete the results?\', \'Delete\', \'deleteResults('+id+')\')"><i class="fa fa-trash"></i></button>';
+			}else{
+				return '&nbsp;';
+			}
+	});
+
+	
+	//-----------------------------------
+	// Render Data
+	var rendererSettings = {
+			data: data,
+		 	idfield: 'PK_ID',
+		 	bgstylefield: null,
+		 	textstylefield: null,
+		 	titlefields: ['NAME', 'PAGE_URL'],
+		 	titleformat: '{0} {1}',
+		 	visiblefields: ['NAME', 'PAGE_URL'],
+		 	labels: {
+		 		PAGE_URL: "URL",
+		 	},
+		 	customizers: {
+		 		TIME_CREATED: function(record, value) { return CFW.format.epochToTimestamp(value) },
+		 		PAGE_URL: function(record, value) { 
+		 			url = CFW.http.secureDecodeURI(value);
+					return '<div class="maxvw-30 word-break-word">'+url+'</div>';
+		 			}
+		 	},
+			actions: actionButtons,
+//			bulkActions: {
+//				"Edit": function (elements, records, values){ alert('Edit records '+values.join(',')+'!'); },
+//				"Delete": function (elements, records, values){ $(elements).remove(); },
+//			},
+//			bulkActionsPos: "both",
+			
+			rendererSettings: {
+				dataviewer: {
+					storeid: 'pageanalyzer-results',
+					renderers: [
+						{	label: 'Table',
+							name: 'table',
+							renderdef: {
+								rendererSettings: {
+									table: {filterable: false},
+								},
+							}
+						},
+						{	label: 'Smaller Table',
+							name: 'table',
+							renderdef: {
+								rendererSettings: {
+									table: {filterable: false, narrow: true},
+								},
+							}
+						},
+						{	label: 'Panels',
+							name: 'panels',
+							renderdef: {}
+						},
+						{	label: 'Cards',
+							name: 'cards',
+							renderdef: {}
+						},
+						{	label: 'CSV',
+							name: 'csv',
+							renderdef: {}
+						},
+						{	label: 'JSON',
+							name: 'json',
+							renderdef: {}
+						}
+					],
+				},
+			},
+		};
+	
+	var renderResult = CFW.render.getRenderer('dataviewer').render(rendererSettings);	
+	
+	parent.append(renderResult);
+	
+}
+/******************************************************************
+ * Print the list of results found in the database.
+ * 
+ * @param parent JQuery object
+ * @param data object containing the list of results.
+ * 
+ ******************************************************************/
+function printResultList_old(parent, data){
+	
 
 	//----------------------------------
 	// Create Table Header
