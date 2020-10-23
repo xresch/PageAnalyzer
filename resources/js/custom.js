@@ -289,7 +289,6 @@ function gantt_statistics_prepareGanttData(data){
 
 	if(entriesCount > 0){
 		dateStartTime = new Date(entries[0].startedDateTime);
-		//console.log("FirstDate:"+dateStartTime.toString());
 	}
 	//----------------------------------
 	// Find lastMillis
@@ -435,7 +434,6 @@ function filterTable(searchField){
 	filter = input.value.toUpperCase();
 
 	table.find("tbody tr, >tr").each(function( index ) {
-		  //console.log( index + ": " + $(this).text() );
 		  
 		  if ($(this).html().toUpperCase().indexOf(filter) > -1) {
 			  $(this).css("display", "");
@@ -464,7 +462,6 @@ function printComparison(parent, data){
 	for(key in data){
 		
 		for(ruleName in data[key].JSON_RESULT.g){
-			//console.log("RuleName"+ruleName);
 			uniqueRuleList[ruleName] = {"Metric": ruleName};
 		}
 	}
@@ -596,7 +593,6 @@ function gantt_statistics_createAnalyzeDropdown(parent, data, type){
 			
 	if(distinctNames != null){
 		nameArray = Object.keys(distinctNames);
-		//console.log(nameArray);
 		for(i = 0; i < nameArray.length; i++){
 			dropdownHTML += '<li class="dropdown-item" onclick="analyzeCookiesOrHeaders(\''+nameArray[i]+'\', \''+type+'\')"><a >'+nameArray[i]+'</a></li>';
 		}
@@ -733,7 +729,6 @@ function gantt_statistics_showDetailsModal(element){
 	//-----------------------------------------
 	var entry = $(element).data('entry');
 
-	//console.log(entry);
 	CURRENT_DETAILS_ENTRY = entry;
 	
 	//-----------------------------------------
