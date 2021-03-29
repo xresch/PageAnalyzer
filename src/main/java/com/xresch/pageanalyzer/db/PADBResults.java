@@ -158,7 +158,7 @@ public class PADBResults {
 					.select(ResultFields.JSON_RESULT.toString())
 					.where(ResultFields.PK_ID.toString(), resultID)
 					.orderbyDesc(ResultFields.TIME_CREATED.toString())
-					.getFirstObject();
+					.getFirstAsObject();
 			
 			if(result != null) {
 				return result.result();
@@ -172,7 +172,7 @@ public class PADBResults {
 					.where(ResultFields.PK_ID.toString(), resultID)
 					.and(ResultFields.FK_ID_USER.toString(), userID)
 					.orderbyDesc(ResultFields.TIME_CREATED.toString())
-					.getFirstObject();
+					.getFirstAsObject();
 			
 			if(result != null) {
 				return result.result();
@@ -205,7 +205,7 @@ public class PADBResults {
 					.select(ResultFields.JSON_HAR_FILE.toString())
 					.where(ResultFields.PK_ID.toString(), resultID)
 					.orderbyDesc(ResultFields.TIME_CREATED.toString())
-					.getFirstObject();
+					.getFirstAsObject();
 			
 			return result.harfile();
 			
@@ -215,7 +215,7 @@ public class PADBResults {
 					.where(ResultFields.PK_ID.toString(), resultID)
 					.and(ResultFields.FK_ID_USER.toString(), userID)
 					.orderbyDesc(ResultFields.TIME_CREATED.toString())
-					.getFirstObject();
+					.getFirstAsObject();
 			
 			return result.harfile();
 		}
