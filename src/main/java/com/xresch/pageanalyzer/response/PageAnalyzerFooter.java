@@ -15,7 +15,7 @@ public class PageAnalyzerFooter extends BTFooter {
 		
 		this.addChild(
 				new BTLink("Support Info", "#")
-					.onclick("cfw_showSupportInfoModal()")
+					.onclick("cfw_ui_showSupportInfoModal()")
 			)
 			.addChild(new BTLink("Custom", "./custom"))
 			;

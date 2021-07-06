@@ -664,7 +664,7 @@ function analyzeCookiesOrHeaders(key, type){
 	
 	resultHTML += "</table>";
 	
-	CFW.ui.showModal('Values for '+type+' "'+key+'"',
+	CFW.ui.showModalMedium('Values for '+type+' "'+key+'"',
 			resultHTML);
 	
 	
@@ -679,7 +679,7 @@ function gantt_statistics_openGanttStatistics(){
 	if(URL_PARAMETERS.resultid != null){
 		var w = window.open(CFW.http.getHostURL()+"/app/ganttchart?resultid="+URL_PARAMETERS.resultid);	
 	}else{
-		CFW.ui.showSmallModal('Limited Feature', 'This currently only works when the result is saved and opened from the History page.');
+		CFW.ui.showModalSmall('Limited Feature', 'This currently only works when the result is saved and opened from the History page.');
 	}
 	
 }
@@ -747,7 +747,7 @@ function gantt_statistics_showDetailsModal(element){
 	//-----------------------------------------
 	// Show Modal and Update
 	//-----------------------------------------
-	CFW.ui.showModal('Details', htmlString);
+	CFW.ui.showModalMedium('Details', htmlString);
 			
 	gantt_statistics_updateDetailsModal('request');
 
