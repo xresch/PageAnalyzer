@@ -1,6 +1,7 @@
 package com.xresch.pageanalyzer.db;
 
 import com.xresch.cfw._main.CFW;
+import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.features.usermgmt.Role;
 
@@ -28,7 +29,7 @@ public class PAPermissions {
 		// Manage Results
 		if(!CFW.DB.Permissions.checkExistsByName(MANAGE_RESULTS)) {
 			Permission manageResults = 
-					new Permission(MANAGE_RESULTS, "user")
+					new Permission(MANAGE_RESULTS, FeatureUserManagement.CATEGORY_USER)
 						.description("Manage all Page Analyzer results results in the DB.");
 			
 			CFW.DB.Permissions.create(manageResults);
@@ -41,7 +42,7 @@ public class PAPermissions {
 		// Analyze HAR
 		if(!CFW.DB.Permissions.checkExistsByName(ANALYZE_HAR)) {
 			Permission analyzeHAR = 
-					new Permission(ANALYZE_HAR, "user")
+					new Permission(ANALYZE_HAR, FeatureUserManagement.CATEGORY_USER)
 						.description("Upload and analyze HAR files.")
 ;
 			
@@ -54,7 +55,7 @@ public class PAPermissions {
 		// Download HAR
 		if(!CFW.DB.Permissions.checkExistsByName(DOWNLOAD_HAR)) {
 			Permission downloadHAR = 
-					new Permission(DOWNLOAD_HAR, "user")
+					new Permission(DOWNLOAD_HAR, FeatureUserManagement.CATEGORY_USER)
 						.description("Download HAR files from the result history and analyze Gantt Charts.");
 			
 			CFW.DB.Permissions.create(downloadHAR);
@@ -67,7 +68,7 @@ public class PAPermissions {
 		// Analyze URL
 		if(!CFW.DB.Permissions.checkExistsByName(ANALYZE_URL)) {
 			Permission analyzeURL = 
-					new Permission(ANALYZE_URL, "user")
+					new Permission(ANALYZE_URL, FeatureUserManagement.CATEGORY_USER)
 						.description("Analyze a web application by using a URL.");
 			
 			CFW.DB.Permissions.create(analyzeURL);
@@ -80,7 +81,7 @@ public class PAPermissions {
 		// View History
 		if(!CFW.DB.Permissions.checkExistsByName(VIEW_HISTORY)) {
 			Permission viewHistory = 
-					new Permission(VIEW_HISTORY, "user")
+					new Permission(VIEW_HISTORY, FeatureUserManagement.CATEGORY_USER)
 						.description("View the history of the saved results.");
 			
 			CFW.DB.Permissions.create(viewHistory);
@@ -93,7 +94,7 @@ public class PAPermissions {
 		// Delete Result
 		if(!CFW.DB.Permissions.checkExistsByName(DELETE_RESULT)) {
 			Permission deleteResult = 
-					new Permission(DELETE_RESULT, "user")
+					new Permission(DELETE_RESULT, FeatureUserManagement.CATEGORY_USER)
 						.description("Delete results from the result history.");
 			
 			CFW.DB.Permissions.create(deleteResult);
@@ -105,7 +106,7 @@ public class PAPermissions {
 		// View Documentation
 		if(!CFW.DB.Permissions.checkExistsByName(VIEW_DOCU)) {
 			Permission viewDocu = 
-					new Permission(VIEW_DOCU, "user")
+					new Permission(VIEW_DOCU, FeatureUserManagement.CATEGORY_USER)
 						.description("View the documentation page of the page analyzer.");
 			
 			CFW.DB.Permissions.create(viewDocu);
