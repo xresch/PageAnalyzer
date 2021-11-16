@@ -65,17 +65,17 @@ public class Result extends CFWObject {
 	
 	private CFWField<String> pageURL = CFWField.newString(FormFieldType.NONE, ResultFields.PAGE_URL.toString())
 			.setDescription("The url that was analyzed.")
-			.disableSecurity();
+			.disableSanitization();
 	
 	private CFWField<String> result = CFWField.newString(FormFieldType.NONE, ResultFields.JSON_RESULT.toString())
 			.setColumnDefinition("CLOB")
 			.setDescription("The the page analyzer results.")
-			.disableSecurity();
+			.disableSanitization();
 	
 	private CFWField<String> harfile = CFWField.newString(FormFieldType.NONE, ResultFields.JSON_HAR_FILE.toString())
 			.setColumnDefinition("CLOB")
 			.setDescription("The raw har file.")
-			.disableSecurity();
+			.disableSanitization();
 	
 	private CFWField<Timestamp> timeCreated = CFWField.newTimestamp(FormFieldType.NONE, ResultFields.TIME_CREATED.toString())
 			.setDescription("The results of the yslow analysis.")
