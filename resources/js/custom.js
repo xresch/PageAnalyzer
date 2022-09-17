@@ -1913,7 +1913,7 @@ function draw(options){
 	
 	reset();
 	
-	CFW.ui.toogleLoader(true);
+	CFW.ui.toggleLoader(true);
 	
 	window.setTimeout( 
 	function(){
@@ -1989,7 +1989,7 @@ function draw(options){
 			default:				RESULTS_DIV.text("Sorry some error occured, be patient while nobody is looking into it.");
 		}
 		
-		CFW.ui.toogleLoader(false);
+		CFW.ui.toggleLoader(false);
 	}, 100);
 	
 	
