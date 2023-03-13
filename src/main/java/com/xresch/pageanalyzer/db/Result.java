@@ -181,7 +181,7 @@ public class Result extends CFWObject {
 		getHar.setRequestHandler(new APIRequestHandler() {
 			
 			@Override
-			public void handleRequest(HttpServletRequest request, HttpServletResponse response, APIDefinition definition) {
+			public void handleRequest(HttpServletRequest request, HttpServletResponse response, APIDefinition definition, String bodyContents) {
 				// TODO Auto-generated method stub
 				PlaintextResponse plaintext = new PlaintextResponse();
 				
@@ -211,7 +211,7 @@ public class Result extends CFWObject {
 		getResult.setRequestHandler(new APIRequestHandler() {
 			
 			@Override
-			public void handleRequest(HttpServletRequest request, HttpServletResponse response, APIDefinition definition) {
+			public void handleRequest(HttpServletRequest request, HttpServletResponse response, APIDefinition definition, String bodyContents) {
 				// TODO Auto-generated method stub
 				PlaintextResponse plaintext = new PlaintextResponse();
 				
