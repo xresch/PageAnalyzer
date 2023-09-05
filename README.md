@@ -25,3 +25,13 @@ Following system requirements are needed to run Page Analyzer, as it uses JavaFX
 The API Endpoint allows you analyze HAR files without storing them.
 The URL of the API is the following. Call it to get more details:
 - http://localhost:8888/analyzehar
+
+# Generating HAR-Files
+You can use the Developer Tools of Google Chrome or similar browsers:
+1. Open Developer tools with Ctrl+Shift+I
+2. Go to the tab "Network"
+3. Reload the page you want to have a HAR File for to record the requests
+4. Right Click a request in the results and select "Save all as HAR with content"
+
+
+
