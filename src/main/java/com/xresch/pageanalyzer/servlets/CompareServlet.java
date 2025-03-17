@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.xresch.cfw._main.CFWContextRequest;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.HTMLResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage;
+import com.xresch.cfw.response.bootstrap.CFWHTMLItemAlertMessage;
 
 /**************************************************************************************************************
  * 
@@ -46,7 +46,7 @@ public class CompareServlet extends HttpServlet
 		// Create array with json results
 		
 		if(!resultIDs.matches("(\\d,?)+")) {
-			CFWContextRequest.addAlertMessage(AlertMessage.MessageType.ERROR, "Result IDs '"+resultIDs+"' is not a string of comma separated numbers.");
+			CFWContextRequest.addAlertMessage(CFWHTMLItemAlertMessage.MessageType.ERROR, "Result IDs '"+resultIDs+"' is not a string of comma separated numbers.");
 		}
 
 		StringBuilder javascript = html.getJavascript();

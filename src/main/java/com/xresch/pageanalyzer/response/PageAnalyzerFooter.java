@@ -1,7 +1,7 @@
 package com.xresch.pageanalyzer.response;
 
-import com.xresch.cfw.response.bootstrap.BTFooter;
-import com.xresch.cfw.response.bootstrap.BTLink;
+import com.xresch.cfw.response.bootstrap.CFWHTMLItemFooter;
+import com.xresch.cfw.response.bootstrap.CFWHTMLItemLink;
 
 
 /**************************************************************************************************************
@@ -9,15 +9,15 @@ import com.xresch.cfw.response.bootstrap.BTLink;
  * @author Reto Scheiwiller, (c) Copyright 2019 
  * @license MIT-License
  **************************************************************************************************************/
-public class PageAnalyzerFooter extends BTFooter {
+public class PageAnalyzerFooter extends CFWHTMLItemFooter {
 
 	public PageAnalyzerFooter() {
 		
 		this.addChild(
-				new BTLink("Support Info", "#")
+				new CFWHTMLItemLink("Support Info", "#")
 					.onclick("cfw_ui_showSupportInfoModal()")
 			)
-			.addChild(new BTLink("Custom", "./custom"))
+			.addChild(new CFWHTMLItemLink("Custom", "./custom"))
 			;
 		
 		

@@ -13,7 +13,7 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWContextRequest;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.HTMLResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage;
+import com.xresch.cfw.response.bootstrap.CFWHTMLItemAlertMessage;
 import com.xresch.cfw.utils.CFWFiles;
 import com.xresch.pageanalyzer.db.PADBResults;
 import com.xresch.pageanalyzer.db.PAPermissions;
@@ -92,7 +92,7 @@ public class HARUploadServlet extends HttpServlet
 			Part harFile = request.getPart("harFile");
 	
 			if (harFile == null) {
-				CFWContextRequest.addAlertMessage(AlertMessage.MessageType.ERROR, "HAR File could not be loaded.");
+				CFWContextRequest.addAlertMessage(CFWHTMLItemAlertMessage.MessageType.ERROR, "HAR File could not be loaded.");
 			}else {
 	
 				CFWLog log = new CFWLog(logger).start().method("doPost()-StreamHarFile");

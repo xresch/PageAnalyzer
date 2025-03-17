@@ -12,7 +12,7 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWContextRequest;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.HTMLResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage;
+import com.xresch.cfw.response.bootstrap.CFWHTMLItemAlertMessage;
 import com.xresch.pageanalyzer.db.PADBResults;
 import com.xresch.pageanalyzer.db.PAPermissions;
 
@@ -47,7 +47,7 @@ public class ResultListServlet extends HttpServlet
 			//TODO: Check User
 			
 			if (jsonResults == null || jsonResults.isEmpty()) {
-				CFWContextRequest.addAlertMessage(AlertMessage.MessageType.ERROR, "Results could not be loaded.");
+				CFWContextRequest.addAlertMessage(CFWHTMLItemAlertMessage.MessageType.ERROR, "Results could not be loaded.");
 			}else {
 										
 				content.append("<div id=\"results\"></div>");

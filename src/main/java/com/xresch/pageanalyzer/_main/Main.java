@@ -11,7 +11,7 @@ import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
 import com.xresch.cfw.logging.CFWLog;
-import com.xresch.cfw.response.bootstrap.MenuItem;
+import com.xresch.cfw.response.bootstrap.CFWHTMLItemMenuItem;
 import com.xresch.cfw.spi.CFWAppInterface;
 import com.xresch.pageanalyzer.db.PAPermissions;
 import com.xresch.pageanalyzer.db.Result;
@@ -72,21 +72,21 @@ public class Main extends Application implements CFWAppInterface {
     	//----------------------------------
     	// Register Regular Menu
 		CFW.Registry.Components.addRegularMenuItem(
-				(MenuItem)new MenuItem("HAR Upload")
+				(CFWHTMLItemMenuItem)new CFWHTMLItemMenuItem("HAR Upload")
 					.faicon("fas fa-upload")
 					.addPermission(PAPermissions.ANALYZE_HAR)
 					.href("./harupload")	
 				, null);
 		
 		CFW.Registry.Components.addRegularMenuItem(
-				(MenuItem)new MenuItem("Analyze URL")
+				(CFWHTMLItemMenuItem)new CFWHTMLItemMenuItem("Analyze URL")
 					.faicon("fas fa-flask")
 					.addPermission(PAPermissions.ANALYZE_URL)
 					.href("./analyzeurl")	
 				, null);
 		
 		CFW.Registry.Components.addRegularMenuItem(
-				(MenuItem)new MenuItem("History")
+				(CFWHTMLItemMenuItem)new CFWHTMLItemMenuItem("History")
 					.faicon("fas fa-history")
 					.addPermission(PAPermissions.VIEW_HISTORY)
 					.href("./resultlist")
@@ -100,7 +100,7 @@ public class Main extends Application implements CFWAppInterface {
 //				, null);
 		
 		CFW.Registry.Components.addRegularMenuItem(
-				(MenuItem)new MenuItem("Summary")
+				(CFWHTMLItemMenuItem)new CFWHTMLItemMenuItem("Summary")
 					.faicon("fas fa-calculator")
 					.addPermission(PAPermissions.VIEW_DOCU)
 					.addCssClass("result-view-tabs")
@@ -108,33 +108,33 @@ public class Main extends Application implements CFWAppInterface {
 				, null);
 		
 		CFW.Registry.Components.addRegularMenuItem(
-				(MenuItem)new MenuItem("Grade")
+				(CFWHTMLItemMenuItem)new CFWHTMLItemMenuItem("Grade")
 					.faicon("fas fa-thermometer-half")
 					.addPermission(PAPermissions.VIEW_DOCU)
 					.addCssClass("result-view-tabs")
-					.addChild(new MenuItem("Panels").faicon("fas fa-columns")		.onclick("draw({data: 'yslowresult', info: 'grade', view: 'panels'})"))
-					.addChild(new MenuItem("Table").faicon("fas fa-table")			.onclick("draw({data: 'yslowresult', info: 'grade', view: 'table'})"))
-					.addChild(new MenuItem("Plain Text").faicon("fas fa-file-alt")	.onclick("draw({data: 'yslowresult', info: 'grade', view: 'plaintext'})"))
-					.addChild(new MenuItem("JIRA Ticket").faicon("fab fa-jira")		.onclick("draw({data: 'yslowresult', info: 'grade', view: 'jira'})"))
-					.addChild(new MenuItem("CSV").faicon("fas fa-file-csv")			.onclick("draw({data: 'yslowresult', info: 'grade', view: 'csv'})"))
-					.addChild(new MenuItem("JSON").faicon("fab fa-js")				.onclick("draw({data: 'yslowresult', info: 'grade', view: 'json'})"))
+					.addChild(new CFWHTMLItemMenuItem("Panels").faicon("fas fa-columns")		.onclick("draw({data: 'yslowresult', info: 'grade', view: 'panels'})"))
+					.addChild(new CFWHTMLItemMenuItem("Table").faicon("fas fa-table")			.onclick("draw({data: 'yslowresult', info: 'grade', view: 'table'})"))
+					.addChild(new CFWHTMLItemMenuItem("Plain Text").faicon("fas fa-file-alt")	.onclick("draw({data: 'yslowresult', info: 'grade', view: 'plaintext'})"))
+					.addChild(new CFWHTMLItemMenuItem("JIRA Ticket").faicon("fab fa-jira")		.onclick("draw({data: 'yslowresult', info: 'grade', view: 'jira'})"))
+					.addChild(new CFWHTMLItemMenuItem("CSV").faicon("fas fa-file-csv")			.onclick("draw({data: 'yslowresult', info: 'grade', view: 'csv'})"))
+					.addChild(new CFWHTMLItemMenuItem("JSON").faicon("fab fa-js")				.onclick("draw({data: 'yslowresult', info: 'grade', view: 'json'})"))
 				, null);
 
 		CFW.Registry.Components.addRegularMenuItem(
-				(MenuItem)new MenuItem("Statistics")
+				(CFWHTMLItemMenuItem)new CFWHTMLItemMenuItem("Statistics")
 					.faicon("fas fa-signal")
 					.addPermission(PAPermissions.VIEW_DOCU)
 					.addCssClass("result-view-tabs")
-					.addChild(new MenuItem("Gantt Chart").faicon("fas fa-signal fa-rotate-90")						.onclick("gantt_statistics_openGanttStatistics()"))
-					.addChild(new MenuItem("Table: Statistics by Type").faicon("fas fa-table")						.onclick("draw({data: 'yslowresult', info: 'stats', view: 'table', stats: 'type'})"))
-					.addChild(new MenuItem("Table: Statistics by Type with primed Cache").faicon("fas fa-table")	.onclick("draw({data: 'yslowresult', info: 'stats', view: 'table', stats: 'type_cached'})"))
-					.addChild(new MenuItem("Table: Components").faicon("fas fa-table")								.onclick("draw({data: 'yslowresult', info: 'stats', view: 'table', stats: 'components'})"))
+					.addChild(new CFWHTMLItemMenuItem("Gantt Chart").faicon("fas fa-signal fa-rotate-90")						.onclick("gantt_statistics_openGanttStatistics()"))
+					.addChild(new CFWHTMLItemMenuItem("Table: Statistics by Type").faicon("fas fa-table")						.onclick("draw({data: 'yslowresult', info: 'stats', view: 'table', stats: 'type'})"))
+					.addChild(new CFWHTMLItemMenuItem("Table: Statistics by Type with primed Cache").faicon("fas fa-table")	.onclick("draw({data: 'yslowresult', info: 'stats', view: 'table', stats: 'type_cached'})"))
+					.addChild(new CFWHTMLItemMenuItem("Table: Components").faicon("fas fa-table")								.onclick("draw({data: 'yslowresult', info: 'stats', view: 'table', stats: 'components'})"))
 				, null);
 				
     	//----------------------------------
     	// Register Admin Menu
 		CFW.Registry.Components.addAdminMenuItem(
-				(MenuItem)new MenuItem("Manage Results")
+				(CFWHTMLItemMenuItem)new CFWHTMLItemMenuItem("Manage Results")
 					.faicon("fas fa-poll")
 					.addPermission(PAPermissions.MANAGE_RESULTS)
 					.href("./manageresults")	

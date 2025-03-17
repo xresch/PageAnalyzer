@@ -13,7 +13,7 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.PlaintextResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.xresch.cfw.response.bootstrap.CFWHTMLItemAlertMessage.MessageType;
 import com.xresch.pageanalyzer.db.PADBResults;
 import com.xresch.pageanalyzer.db.PAPermissions;
 
@@ -62,7 +62,7 @@ public class DataServlet extends HttpServlet {
 		StringBuilder content = json.getContent();
 
 		if (type == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Type was not specified");
+			CFW.Messages.addErrorMessage("Type was not specified");
 			//content.append("{\"error\": \"Type was not specified.\"}");
 		}else {
 
@@ -79,7 +79,7 @@ public class DataServlet extends HttpServlet {
 				case "har": 			if(CFW.Context.Request.hasPermission(PAPermissions.DOWNLOAD_HAR)) {
 											content.append(PADBResults.getHARFileByID(Integer.parseInt(resultID)));
 										}else {
-											CFW.Context.Request.addAlertMessage(MessageType.ERROR, "You don't have the required permission to download HAR files.");
+											CFW.Messages.addErrorMessage("You don't have the required permission to download HAR files.");
 										}
 										break;
 				
@@ -87,14 +87,14 @@ public class DataServlet extends HttpServlet {
 											PlaintextResponse plain = new PlaintextResponse();
 											plain.getContent().append(PADBResults.getHARFileByID(Integer.parseInt(resultID)));
 										}else {
-											CFW.Context.Request.addAlertMessage(MessageType.ERROR, "You don't have the required permission to download HAR files.");
+											CFW.Messages.addErrorMessage("You don't have the required permission to download HAR files.");
 										}
 				break;
 				case "compareyslow": 	String resultIDs = request.getParameter("resultids");
 										content.append(PADBResults.getResultListForComparison(resultIDs));
 										break;
 										
-				default: 				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The type '"+type+"' is not supported.");
+				default: 				CFW.Messages.addErrorMessage("The type '"+type+"' is not supported.");
 										break;
 										
 			}
