@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.xresch.cfw._main.CFWContextRequest;
+import com.xresch.cfw._main.CFWMessages.MessageType;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.HTMLResponse;
-import com.xresch.cfw.response.bootstrap.CFWHTMLItemAlertMessage;
 
 /**************************************************************************************************************
  * 
@@ -43,7 +43,7 @@ public class ResultViewServlet extends HttpServlet
 		String resultID = request.getParameter("resultid");
 		
 		if(!resultID.matches("\\d+")) {
-			CFWContextRequest.addAlertMessage(CFWHTMLItemAlertMessage.MessageType.ERROR, "Result ID '"+resultID+"' is not a number.");
+			CFWContextRequest.addAlertMessage(MessageType.ERROR, "Result ID '"+resultID+"' is not a number.");
 		}
 			
 		content.append("<div id=\"results\"></div>");

@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.xresch.cfw._main.CFWContextRequest;
+import com.xresch.cfw._main.CFWMessages.MessageType;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.HTMLResponse;
-import com.xresch.cfw.response.bootstrap.CFWHTMLItemAlertMessage;
 import com.xresch.pageanalyzer.db.PADBResults;
 
 /**************************************************************************************************************
@@ -47,12 +47,12 @@ public class GanttChartServlet extends HttpServlet
 		if(resultID.matches("\\d+")) {
 			jsonResults = PADBResults.getHARFileByID(Integer.parseInt(resultID));
 		}else {
-			CFWContextRequest.addAlertMessage(CFWHTMLItemAlertMessage.MessageType.ERROR, "Result ID '"+resultID+"' is not a number.");
+			CFWContextRequest.addAlertMessage(MessageType.ERROR, "Result ID '"+resultID+"' is not a number.");
 		}
 	
 		
 		if (jsonResults == null) {
-			CFWContextRequest.addAlertMessage(CFWHTMLItemAlertMessage.MessageType.ERROR, "Results could not be loaded.");
+			CFWContextRequest.addAlertMessage(MessageType.ERROR, "Results could not be loaded.");
 		}else {
 									
 			content.append("<div id=\"results\"></div>");

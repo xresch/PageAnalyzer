@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWContextRequest;
+import com.xresch.cfw._main.CFWMessages.MessageType;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.HTMLResponse;
-import com.xresch.cfw.response.bootstrap.CFWHTMLItemAlertMessage;
 import com.xresch.cfw.utils.CFWFiles;
 import com.xresch.pageanalyzer.db.PADBResults;
 import com.xresch.pageanalyzer.db.PAPermissions;
@@ -77,7 +77,7 @@ public class AnalyzeURLServlet extends HttpServlet
 			String analyzeURL = request.getParameter("analyzeurl");
 			
 			if(analyzeURL == null){
-				CFWContextRequest.addAlertMessage(CFWHTMLItemAlertMessage.MessageType.ERROR, "Please specify a URL.");
+				CFWContextRequest.addAlertMessage(MessageType.ERROR, "Please specify a URL.");
 			}else {
 	
 				//--------------------------
