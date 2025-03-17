@@ -13,7 +13,7 @@ import com.xresch.cfw._main.CFWContextRequest;
 import com.xresch.cfw._main.CFWMessages.MessageType;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.HTMLResponse;
-import com.xresch.cfw.utils.CFWFiles;
+import com.xresch.cfw.utils.files.CFWFiles;
 import com.xresch.pageanalyzer.db.PADBResults;
 import com.xresch.pageanalyzer.db.PAPermissions;
 import com.xresch.pageanalyzer.phantomjs.PhantomJSInterface;

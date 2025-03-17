@@ -13,7 +13,7 @@ import javax.servlet.http.Part;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.HTMLResponse;
 import com.xresch.cfw.response.PlaintextResponse;
-import com.xresch.cfw.utils.CFWFiles;
+import com.xresch.cfw.utils.files.CFWFiles;
 import com.xresch.pageanalyzer.yslow.YSlow;
 
 

@@ -16,7 +16,7 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWProperties;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.HTMLResponse;
-import com.xresch.cfw.utils.CFWFiles;
+import com.xresch.cfw.utils.files.CFWFiles;
 import com.xresch.pageanalyzer.db.PAPermissions;
 
 

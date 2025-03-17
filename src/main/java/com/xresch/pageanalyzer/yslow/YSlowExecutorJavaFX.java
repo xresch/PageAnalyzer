@@ -13,7 +13,7 @@ import org.w3c.dom.Document;
 
 import com.sun.javafx.webkit.WebConsoleListener;
 import com.xresch.cfw._main.CFWProperties;
-import com.xresch.cfw.utils.CFWFiles;
+import com.xresch.cfw.utils.files.CFWFiles;
 import com.xresch.pageanalyzer._main.Main;
 
 import javafx.application.Application;
