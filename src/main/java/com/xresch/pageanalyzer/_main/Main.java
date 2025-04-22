@@ -265,7 +265,7 @@ public class Main extends Application implements CFWAppInterface {
 	        //###################################################################
 	        app.setDefaultURL("/harupload", true);
 	        try {
-				app.start();
+				app.startServer();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
