@@ -154,14 +154,14 @@ public class Result extends CFWObject {
 
 		//----------------------------------
 		// fetchData
-		APIDefinitionFetch fetchDataAPI = 
+		APIDefinition fetchDataAPI = 
 				new APIDefinitionFetch(
 						this.getClass(),
 						this.getClass().getSimpleName(),
 						"fetchData",
 						inputFields,
 						outputFields
-				);
+				).isSpaced(false);
 		
 		apis.add(fetchDataAPI);
 		
@@ -174,7 +174,7 @@ public class Result extends CFWObject {
 						"getHar",
 						new String[] {ResultFields.PK_ID.toString()},
 						new String[] {ResultFields.JSON_HAR_FILE.toString()}
-				);
+				) {};
 		
 		getHar.setDescription("Returns the HAR as json for the specified result ID.");
 		
@@ -204,7 +204,7 @@ public class Result extends CFWObject {
 						"getResult",
 						new String[] {ResultFields.PK_ID.toString()},
 						new String[] {ResultFields.JSON_RESULT.toString()}
-				);
+				){};
 		
 		getResult.setDescription("Returns the results as json for the specified result ID.");
 		
