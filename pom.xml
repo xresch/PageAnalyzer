@@ -8,7 +8,7 @@
 
 	<!-- ================= PROPERTIES ================== -->
 	<properties>
-		<javafxVersion>15</javafxVersion>
+		<javafxVersion>17.0.10</javafxVersion>
 		<!-- win, linux or mac -->
 		<javafxClassifier>linux</javafxClassifier>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
