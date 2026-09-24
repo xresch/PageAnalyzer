@@ -35,7 +35,7 @@ public class RestAPIServlet extends HttpServlet {
 			
 		HTMLResponse html = new HTMLResponse("Rest API");
 		StringBuilder content = html.getContent();
-		content.append(CFWFiles.getFileContent(request, "./resources/html/api.html"));
+		content.append(CFWFiles.getFileContent("./resources/html/api.html"));
 		
 		response.setContentType("text/html");
 		response.setStatus(HttpServletResponse.SC_OK);

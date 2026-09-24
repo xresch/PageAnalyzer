@@ -42,7 +42,7 @@ public class AnalyzeURLServlet extends HttpServlet
 		StringBuilder content = html.getContent();
 		
 		if(CFW.Context.Request.hasPermission(PAPermissions.ANALYZE_URL)) {
-			content.append(CFWFiles.getFileContent(request, "./resources/html/analyzeurl.html"));
+			content.append(CFWFiles.getFileContent("./resources/html/analyzeurl.html"));
 			
 	        response.setContentType("text/html");
 	        response.setStatus(HttpServletResponse.SC_OK);
@@ -62,7 +62,7 @@ public class AnalyzeURLServlet extends HttpServlet
 		StringBuilder content = html.getContent();
 		
 		if(CFW.Context.Request.hasPermission(PAPermissions.ANALYZE_URL)) {
-			content.append(CFWFiles.getFileContent(request, "./resources/html/analyzeurl.html"));
+			content.append(CFWFiles.getFileContent("./resources/html/analyzeurl.html"));
 			
 			content.append("<h1>Results</h1>");
 			content.append("<p>Use the links in the menu to change the view. </p>");

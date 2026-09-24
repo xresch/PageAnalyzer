@@ -45,7 +45,7 @@ public class HARUploadServlet extends HttpServlet
 		
 		if(CFW.Context.Request.hasPermission(PAPermissions.ANALYZE_HAR)) {
 			StringBuilder content = html.getContent();
-			content.append(CFWFiles.getFileContent(request, "./resources/html/harupload.html"));
+			content.append(CFWFiles.getFileContent("./resources/html/harupload.html"));
 			
 	        response.setContentType("text/html");
 	        response.setStatus(HttpServletResponse.SC_OK);
@@ -65,7 +65,7 @@ public class HARUploadServlet extends HttpServlet
 		StringBuilder javascript = html.getJavascript();
 		
 		if(CFW.Context.Request.hasPermission(PAPermissions.ANALYZE_HAR)) {
-			content.append(CFWFiles.getFileContent(request, "./resources/html/harupload.html"));
+			content.append(CFWFiles.getFileContent("./resources/html/harupload.html"));
 			
 			content.append("<h1>Results</h1>");
 			content.append("<p>Use the links in the menu to change the view. </p>");
