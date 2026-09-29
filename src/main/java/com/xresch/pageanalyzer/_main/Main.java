@@ -147,61 +147,52 @@ public class Main extends Application implements CFWAppInterface {
     	
 		//----------------------------------
 		// Register Manual Pages
-		ManualPage pageAnalyzer = new ManualPage("Page Analyzer").faicon("fas fa-search")
-				.addPermission(FeatureManual.PERMISSION_MANUAL);
+		ManualPage pageAnalyzer = new ManualPage("Page Analyzer").faicon("fas fa-search");
 		
 		CFW.Registry.Manual.addManualPage(null, pageAnalyzer);
 		
 			pageAnalyzer.addChild(
 				new ManualPage("Introduction")
 					.faicon("fas fa-star")
-					.addPermission(FeatureManual.PERMISSION_MANUAL)
 					.content(HandlingType.JAR_RESOURCE, RESOURCE_PACKAGE, "z_manual_intro.html")
 			);
 			
 			pageAnalyzer.addChild(
 				new ManualPage("Analyze a Har File")
 					.faicon("fas fa-cogs")
-					.addPermission(FeatureManual.PERMISSION_MANUAL)
 					.content(HandlingType.JAR_RESOURCE, RESOURCE_PACKAGE, "z_manual_analyzehar.html")
 			);
 			
-			ManualPage views = new ManualPage("Views").faicon("fas fa-binoculars")
-					.addPermission(FeatureManual.PERMISSION_MANUAL);
+			ManualPage views = new ManualPage("Views").faicon("fas fa-binoculars");
 			pageAnalyzer.addChild(views);
 			
 				views.addChild(
 					new ManualPage("Result View")
 						.faicon("fas fa-traffic-light")
-						.addPermission(FeatureManual.PERMISSION_MANUAL)
 						.content(HandlingType.JAR_RESOURCE, RESOURCE_PACKAGE, "z_manual_views_result.html")
 				);
 				
 				views.addChild(
 						new ManualPage("History View")
 							.faicon("fas fa-history")
-							.addPermission(FeatureManual.PERMISSION_MANUAL)
 							.content(HandlingType.JAR_RESOURCE, RESOURCE_PACKAGE, "z_manual_views_history.html")
 					);
     			
 				views.addChild(
 						new ManualPage("Gantt View")
 							.faicon("fas fa-signal fa-rotate-90")
-							.addPermission(FeatureManual.PERMISSION_MANUAL)
 							.content(HandlingType.JAR_RESOURCE, RESOURCE_PACKAGE, "z_manual_views_gantt.html")
 					);
 				
 				views.addChild(
 						new ManualPage("Comparison View")
 							.faicon("fas fa-not-equal")
-							.addPermission(FeatureManual.PERMISSION_MANUAL)
 							.content(HandlingType.JAR_RESOURCE, RESOURCE_PACKAGE, "z_manual_views_comparison.html")
 					);
 				
 			pageAnalyzer.addChild(
 					new ManualPage("See Also")
 						.faicon("fas fa-eye")
-						.addPermission(FeatureManual.PERMISSION_MANUAL)
 						.content(HandlingType.JAR_RESOURCE, RESOURCE_PACKAGE, "z_manual_seealso.html")
 				);
 	}
